@@ -45,10 +45,11 @@ test(){
 
 bind -x '"\C-l":clear'
 
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/OLupGM
+
 clear
 test
-
-eval "$(ssh-agent -s)"
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
