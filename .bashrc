@@ -48,6 +48,8 @@ bind -x '"\C-l":clear'
 clear
 test
 
+eval "$(ssh-agent -s)"
+
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias please='sudo'
