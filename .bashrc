@@ -20,7 +20,7 @@ entry="${GREEN}${MACHINE}${RES} welcomes you ${GREEN}${USER}${RES}!"
 entryPatch="${MACHINE} welcomes you ${USER}!"
 
 
-bash ~/programs/bash/RAMWatch.sh &
+bash ~/Documents/programs/bash/RAMWatch.sh &
 
 RAM_WATCH_PID=$!
 
