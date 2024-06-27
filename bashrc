@@ -19,13 +19,12 @@ first=true
 entry="${GREEN}${MACHINE}${RES} welcomes you ${GREEN}${USER}${RES}!"
 entryPatch="${MACHINE} welcomes you ${USER}!"
 
-
-bash ~/Documents/programs/bash/RAMWatch.sh &
+bash ~/Documents/programs/bash/bashrc/RAMWatch.sh &
 
 RAM_WATCH_PID=$!
 
 
-if $(head -n 1 ~/Documents/programs/bash/settings.conf); then
+if $(head -n 1 ~/Documents/programs/bash/bashrc/settings.conf); then
 	RAMPush=1
 else
 	RAMPush=0
