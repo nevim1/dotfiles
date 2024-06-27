@@ -25,8 +25,13 @@ bash ~/Documents/programs/bash/RAMWatch.sh &
 RAM_WATCH_PID=$!
 
 
-tput vpa 1
+if $(head -n 1 ~/Documents/programs/bash/settings.conf); then
+	RAMPush=1
+else
+	RAMPush=0
+fi
 
+tput vpa $RAMPush
 
 clear(){
 	command clear
@@ -35,13 +40,13 @@ clear(){
 
 	width=$(tput cols)
 
-	tput vpa 1
+	tput vpa $RAMPush
 
 	if $first;then
 		tput hpa $(((width / 2)-(${#entryPatch} / 2)))
 		echo $entry
 		first=false
-		tput vpa 2 
+		tput vpa $((RAMPush + 1))
 	fi
 
 	tput hpa $(((width / 2)-(${#date} / 2)))

@@ -11,8 +11,6 @@ trap change WINCH
 padd=20		#in whitespaces
 
 if ! test -f ~/Documents/programs/bash/settings.conf ;then
-	echo hi
-	sleep 2
 	touch ~/Documents/programs/bash/settings.conf
 	
 	~/Documents/programs/bash/settings.conf < echo true
