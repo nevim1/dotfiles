@@ -9,7 +9,7 @@
 MACHINE=$(hostname)
 
 
-GREEN="$(tput setaf 10)"
+GREEN="$(tput setaf 2)"
 RES="$(tput sgr0)"
 
 
@@ -83,12 +83,14 @@ trap sighupHandle SIGHUP
 
 alias ls='ls --color=auto'
 alias l='ls'
+alias la='ls -a --color=auto'
+alias ll='ls -la --color=auto'
 alias grep='grep --color=auto'
 alias please='sudo'
 alias pls='sudo'
-alias la='ls -a --color=auto'
-alias ll='ls -la --color=auto'
+alias nuke='rm -rf'
 
 
-PS1='\A | ${GREEN}\u${RES} | \w \$> '
+#nuh uh
+PS1='\n──────┴───────┘\033[1F\A │ ${GREEN}\u${RES} │ \w \$> '
 PS2='> '
