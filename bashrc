@@ -71,7 +71,7 @@ sighupHandle(){
 
 
 eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/OLupGM
+ssh-add ~/.ssh/nevim-linux-lenovo-ssh-key
 
 
 clear

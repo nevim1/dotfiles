@@ -11,13 +11,13 @@ trap change WINCH
 
 padd=20		#in whitespaces
 
-if ! test -f ./settings.conf ;then
-	touch ./settings.conf 
+if ! test -f ~/Documents/programs/bash/bashrc/settings.conf ;then
+	touch ~/Documents/programs/bash/bashrc/settings.conf 
 	
-	./settings.conf < echo true
+	~/Documents/programs/bash/bashrc/settings.conf < echo true # somehow doesn't work
 fi
 
-run=$(head -n 1 ./settings.conf)
+run=$(head -n 1 ~/Documents/programs/bash/bashrc/settings.conf)
 
 while true; do
 	if $run; then
