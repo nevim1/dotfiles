@@ -11,13 +11,13 @@ trap change WINCH
 
 padd=20		#in whitespaces
 
-if ! test -f ~/Documents/programs/bash/settings.conf ;then
-	touch ~/Documents/programs/bash/settings.conf
+if ! test -f ./settings.conf ;then
+	touch ./settings.conf 
 	
-	~/Documents/programs/bash/settings.conf < echo true
+	./settings.conf < echo true
 fi
 
-run=$(head -n 1 ~/Documents/programs/bash/settings.conf)
+run=$(head -n 1 ./settings.conf)
 
 while true; do
 	if $run; then
@@ -26,10 +26,10 @@ while true; do
 		declare ramArr
 		
 		
-		nums="${ramArr[1]}/${ramArr[6]}"
+		nums="${ramArr[1]}/${ramArr[2]}"
 		
 		
-		fill=$(echo $((((($W-${#nums}-2-$padd)*${ramArr[6]})/${ramArr[1]})/1)))
+		fill=$(echo $((((($W-${#nums}-2-$padd)*${ramArr[2]})/${ramArr[1]})/1)))
 		
 		
 		out="["
