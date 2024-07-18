@@ -93,5 +93,5 @@ alias nuke='rm -rf'
 
 
 #nuh uh
-PS1='\n──────┴───────╯\e[1F\A │ ${GREEN}\u${RES} │ \w \$> '
+PS1='\n──────┴───────┘\033[1F\A │ ${GREEN}\u${RES} │ \w \$> '
 PS2='> '
