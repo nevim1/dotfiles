@@ -17,10 +17,10 @@ if ! test -f ~/Documents/programs/bash/bashrc/settings.conf ;then
 	~/Documents/programs/bash/bashrc/settings.conf < echo true # somehow doesn't work
 fi
 
-run=$(head -n 1 ~/Documents/programs/bash/bashrc/settings.conf)
+#run=$(head -n 1 ~/Documents/programs/bash/bashrc/settings.conf)
 
 while true; do
-	if $run; then
+#	if $run; then
 		ram=$(free | grep -i Mem:)
 		IFS=' ' read -ra ramArr <<< $ram
 		declare ramArr
@@ -54,5 +54,5 @@ while true; do
 		echo $out 
 		tput rc
 		sleep 1
-	fi
+#	fi
 done

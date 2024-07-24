@@ -12,19 +12,19 @@ MACHINE=$(hostname)
 GREEN="$(tput setaf 2)"
 RES="$(tput sgr0)"
 
-
 first=true
 
 
 entry="${GREEN}${MACHINE}${RES} welcomes you ${GREEN}${USER}${RES}!"
 entryPatch="${MACHINE} welcomes you ${USER}!"
 
-bash ~/Documents/programs/bash/bashrc/RAMWatch.sh &
-
-RAM_WATCH_PID=$!
 
 
 if $(head -n 1 ~/Documents/programs/bash/bashrc/settings.conf); then
+	bash ~/Documents/programs/bash/bashrc/RAMWatch.sh &
+
+	RAM_WATCH_PID=$!
+	
 	RAMPush=1
 else
 	RAMPush=0
@@ -91,6 +91,8 @@ alias pls='sudo'
 alias nuke='rm -rf'
 
 
+#\n──────┴───────┘\033[1F
+
 #nuh uh
-PS1='\n──────┴───────┘\033[1F\A │ ${GREEN}\u${RES} │ \w \$> '
+PS1='\A │ \u │ \w \$> '
 PS2='> '
