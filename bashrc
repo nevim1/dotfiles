@@ -14,6 +14,7 @@ RES="$(tput sgr0)"
 
 first=true
 
+resize_clear=false
 
 entry="${GREEN}${MACHINE}${RES} welcomes you ${GREEN}${USER}${RES}!"
 entryPatch="${MACHINE} welcomes you ${USER}!"
@@ -69,13 +70,18 @@ sighupHandle(){
 	exit
 }
 
-
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/nevim-linux-lenovo-ssh-key
-
+startSSH(){
+	if [ -v $SSH_AGENT_PID ]; then
+		eval "$(ssh-agent -s)"
+		ssh-add ~/.ssh/nevim-linux-lenovo-ssh-key
+	fi
+}
 
 clear
-trap clear WINCH
+
+if $resize_clear; then
+	trap clear WINCH
+fi
 
 trap cleanup EXIT
 trap sighupHandle SIGHUP
@@ -89,7 +95,7 @@ alias grep='grep --color=auto'
 alias please='sudo'
 alias pls='sudo'
 alias nuke='rm -rf'
-
+alias git='startSSH; git '
 
 #\n──────┴───────┘\033[1F
 
