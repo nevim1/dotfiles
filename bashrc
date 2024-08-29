@@ -77,6 +77,26 @@ startSSH(){
 	fi
 }
 
+git(){
+	case $@ in
+		push)
+			startSSH
+			command git push
+			;;
+		pull)
+			startSSH
+			command git pull
+			;;
+		fetch)
+			startSSH
+			command git fetch
+			;;
+		*)
+			command git $@
+			;;
+	esac
+}
+
 clear
 
 if $resize_clear; then
@@ -95,7 +115,7 @@ alias grep='grep --color=auto'
 alias please='sudo'
 alias pls='sudo'
 alias nuke='rm -rf'
-alias git='startSSH; git '
+#alias git='startSSH; git '
 
 #\n──────┴───────┘\033[1F
 
