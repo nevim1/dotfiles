@@ -78,24 +78,26 @@ startSSH(){
 }
 
 git(){
+	#next case is a lil bit repetetive but i'm too lazy to fix it
 	case $@ in
-		push)
+		push*)
 			startSSH
-			command git push
+			command git $@ 
 			;;
-		pull)
+		pull*)
 			startSSH
-			command git pull
+			command git $@
 			;;
-		fetch)
+		fetch*)
 			startSSH
-			command git fetch
+			command git $@
 			;;
 		*)
 			command git $@
 			;;
 	esac
 }
+
 
 clear
 
@@ -106,7 +108,6 @@ fi
 trap cleanup EXIT
 trap sighupHandle SIGHUP
 
-
 alias ls='ls --color=auto'
 alias l='ls'
 alias la='ls -a --color=auto'
@@ -115,7 +116,9 @@ alias grep='grep --color=auto'
 alias please='sudo'
 alias pls='sudo'
 alias nuke='rm -rf'
-#alias git='startSSH; git '
+alias ...='../..'
+alias ....='../../..'
+alias .....='../../../..'
 
 #\n──────┴───────┘\033[1F
 
