@@ -73,7 +73,7 @@ sighupHandle(){
 startSSH(){
 	if [ -v $SSH_AGENT_PID ]; then
 		eval "$(ssh-agent -s)"
-		ssh-add ~/.ssh/nevim-linux-lenovo-ssh-key
+		ssh-add ~/.ssh/OLupGM
 	fi
 }
 
