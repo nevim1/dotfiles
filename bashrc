@@ -77,6 +77,28 @@ startSSH(){
 	fi
 }
 
+git(){
+	#next case is a lil bit repetetive but i'm too lazy to fix it
+	case $@ in
+		push*)
+			startSSH
+			command git $@ 
+			;;
+		pull*)
+			startSSH
+			command git $@
+			;;
+		fetch*)
+			startSSH
+			command git $@
+			;;
+		*)
+			command git $@
+			;;
+	esac
+}
+
+
 clear
 
 if $resize_clear; then
@@ -86,7 +108,6 @@ fi
 trap cleanup EXIT
 trap sighupHandle SIGHUP
 
-
 alias ls='ls --color=auto'
 alias l='ls'
 alias la='ls -a --color=auto'
@@ -95,7 +116,9 @@ alias grep='grep --color=auto'
 alias please='sudo'
 alias pls='sudo'
 alias nuke='rm -rf'
-alias git='startSSH; git '
+alias ...='../..'
+alias ....='../../..'
+alias .....='../../../..'
 
 #\n──────┴───────┘\033[1F
 
