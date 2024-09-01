@@ -1,0 +1,14 @@
+[init]
+	defaultBranch = main
+[user]
+	email = ondrej.lupisek@gmail.com
+	name = nevim
+[gui]
+	encoding = utf-8
+[status]
+	encoding = utf-8
+[alias]
+	st = status
+	co = commit
+[core]
+	editor = vim
