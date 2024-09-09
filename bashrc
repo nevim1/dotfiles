@@ -110,8 +110,8 @@ trap sighupHandle SIGHUP
 
 alias ls='ls --color=auto'
 alias l='ls'
-alias la='ls -a --color=auto'
-alias ll='ls -la --color=auto'
+alias la='ls -a'
+alias ll='ls -la'
 alias grep='grep --color=auto'
 alias please='sudo'
 alias pls='sudo'
@@ -120,8 +120,8 @@ alias ...='../..'
 alias ....='../../..'
 alias .....='../../../..'
 
-#\n──────┴───────┘\033[1F
+#\[\n──────┴───────┘\033[1F\]
 
 #nuh uh
-PS1='\A │ \u │ \w \$> '
+PS1='\A │ \[$GREEN\]\u\[$RES\] │ \w \$> '
 PS2='> '
