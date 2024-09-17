@@ -73,7 +73,7 @@ sighupHandle(){
 startSSH(){
 	if [ -v $SSH_AGENT_PID ]; then
 		eval "$(ssh-agent -s)"
-		ssh-add ~/.ssh/OLupGM
+		ssh-add ~/.ssh/nevim-linux-lenovo-ssh-key
 	fi
 }
 
@@ -109,19 +109,15 @@ trap cleanup EXIT
 trap sighupHandle SIGHUP
 
 alias ls='ls --color=auto'
-alias l='ls'
+alias l='ls -la'
 alias la='ls -a'
-alias ll='ls -la'
 alias grep='grep --color=auto'
 alias please='sudo'
 alias pls='sudo'
 alias nuke='rm -rf'
-alias ...='../..'
-alias ....='../../..'
-alias .....='../../../..'
 
 #\[\n──────┴───────┘\033[1F\]
 
 #nuh uh
-PS1='\A │ \[$GREEN\]\u\[$RES\] │ \w \$> '
+PS1='\A │ \[$GREEN\]\u\[$RES\] │ \w $? \$> '
 PS2='> '
