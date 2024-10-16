@@ -21,8 +21,8 @@ entryPatch="${MACHINE} welcomes you ${USER}!"
 
 
 
-if $(head -n 1 ~/Documents/programs/bash/bashrc/settings.conf); then
-	bash ~/Documents/programs/bash/bashrc/RAMWatch.sh &
+if $(head -n 1 ~/Documents/programs/bash/dotfiles/settings.conf); then
+	bash ~/Documents/programs/bash/dotfiles/RAMWatch.sh &
 
 	RAM_WATCH_PID=$!
 	
@@ -58,8 +58,14 @@ bind -x '"\C-l":clear'
 
 cleanup(){
 	echo "Hold on"
-	kill $SSH_AGENT_PID
-	kill $RAM_WATCH_PID
+	if ! [ -z $SSH_AGENT_PID ];then
+		kill $SSH_AGENT_PID
+		echo ssh agent killed
+	fi
+	if ! [ -z $RAM_WATCH_PID ]; then
+		kill $RAM_WATCH_PID
+		echo ram watch killed
+	fi
 	sleep 1 
 	echo "terminal ended succesfully"
 }
@@ -109,8 +115,8 @@ trap cleanup EXIT
 trap sighupHandle SIGHUP
 
 alias ls='ls --color=auto'
-alias l='ls -la'
 alias la='ls -a'
+alias l='ls -la'
 alias grep='grep --color=auto'
 alias please='sudo'
 alias pls='sudo'
@@ -119,5 +125,5 @@ alias nuke='rm -rf'
 #\[\n──────┴───────┘\033[1F\]
 
 #nuh uh
-PS1='\A │ \[$GREEN\]\u\[$RES\] │ \w $? \$> '
+PS1='\A │ \[$GREEN\]\u\[$RES\] │ \w \$> '
 PS2='> '
