@@ -58,6 +58,7 @@ bind -x '"\C-l":clear'
 
 cleanup(){
 	echo "Hold on"
+	echo trying to kill ssh and ram
 	if ! [ -z $SSH_AGENT_PID ];then
 		kill $SSH_AGENT_PID
 		echo ssh agent killed
@@ -104,6 +105,12 @@ git(){
 	esac
 }
 
+reboot(){
+	if [ $@ == 'update' ]; then
+		sudo pacman -Syu
+	fi
+	sudo reboot
+}
 
 clear
 
@@ -121,6 +128,7 @@ alias grep='grep --color=auto'
 alias please='sudo'
 alias pls='sudo'
 alias nuke='rm -rf'
+alias ip='ip -c'
 
 #\[\n──────┴───────┘\033[1F\]
 

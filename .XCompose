@@ -5,3 +5,4 @@ include "%L"
 <Multi_key> <greater> <equal> <equal> : "⟹" U27F9
 <Multi_key> <less> <minus> <minus> : "⟵" U27F5
 <Multi_key> <greater> <minus> <minus> : "⟶" U27F6
+<Multi_key> <t> <u> : "👍" U1F44D
