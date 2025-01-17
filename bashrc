@@ -118,6 +118,8 @@ if $resize_clear; then
 	trap clear WINCH
 fi
 
+bind 'set bell-style none'
+
 trap cleanup EXIT
 trap sighupHandle SIGHUP
 
