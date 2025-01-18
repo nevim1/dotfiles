@@ -51,6 +51,9 @@ endif
 filetype plugin on
 
 autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python3\"|normal! G
-autocmd VimEnter * vertical terminal
-autocmd VimEnter * wincmd p
+"autocmd VimEnter * vertical terminal
+"autocmd VimEnter * wincmd p
 autocmd VimLeavePre * if &buftype == 'terminal' | call nvim_input('<C-d>') | endif
+autocmd BufNewFile,BufRead COMMIT_EDITMSG,MERGE_MSG,*.git/* let g:skip_terminal = 1
+autocmd VimEnter * if !exists('g:skip_terminal') || g:skip_terminal == 0 | terminal | wincmd p | endif
+autocmd BufLeave * let g:skip_terminal = 0
