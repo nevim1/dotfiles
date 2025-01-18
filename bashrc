@@ -1,13 +1,11 @@
 #
 # ~/.bashrc
-#oi bruv
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-
+#define some constants
 MACHINE=$(hostname)
-
 
 GREEN="$(tput setaf 2)"
 RES="$(tput sgr0)"
@@ -19,8 +17,7 @@ resize_clear=false
 entry="${GREEN}${MACHINE}${RES} welcomes you ${GREEN}${USER}${RES}!"
 entryPatch="${MACHINE} welcomes you ${USER}!"
 
-
-
+#read configs
 if $(head -n 1 ~/Documents/programs/bash/dotfiles/settings.conf); then
 	bash ~/Documents/programs/bash/dotfiles/RAMWatch.sh &
 
@@ -33,6 +30,7 @@ fi
 
 tput vpa $RAMPush
 
+#make clearing method
 clear(){
 	command clear
 	
@@ -53,30 +51,41 @@ clear(){
 	echo $date
 }
 
+#bind it to <ctrl> + l
 bind -x '"\C-l":clear'
 
-
+#make method for NOT making zombies
 cleanup(){
-	echo "Hold on"
+	echo Hold on
 	echo trying to kill ssh and ram
 	if ! [ -z $SSH_AGENT_PID ];then
 		kill $SSH_AGENT_PID
+		unset SSH_AGENT_PID
 		echo ssh agent killed
 	fi
+
 	if ! [ -z $RAM_WATCH_PID ]; then
 		kill $RAM_WATCH_PID
+		unset RAM_WATCH_PID
 		echo ram watch killed
 	fi
-	sleep 1 
-	echo "terminal ended succesfully"
+	sleep 5 
+	echo terminal ended succesfully
 }
 
+#handle when the window of this shell is closed
 sighupHandle(){
-	echo "closing terminal window"
 	cleanup
 	exit
 }
 
+#when I am using vit too much
+:q(){
+	cleanup
+	exit
+}
+
+#starting SSH agent
 startSSH(){
 	if [ -v $SSH_AGENT_PID ]; then
 		eval "$(ssh-agent -s)"
@@ -84,8 +93,8 @@ startSSH(){
 	fi
 }
 
+#autostart SSH agent when trying to access remote
 git(){
-	#next case is a lil bit repetetive but i'm too lazy to fix it
 	case $@ in
 		push*)
 			startSSH
@@ -105,13 +114,7 @@ git(){
 	esac
 }
 
-reboot(){
-	if [ $@ == 'update' ]; then
-		sudo pacman -Syu
-	fi
-	sudo reboot
-}
-
+#somewhy doesn't work for multiword dir names
 cl(){
 	cd $@
 	ls --color=auto
@@ -123,11 +126,14 @@ if $resize_clear; then
 	trap clear WINCH
 fi
 
+#just because I tried wsl on windows (fuck windows)
 bind 'set bell-style none'
 
+#make it that i wouldn't have zombies
 trap cleanup EXIT
 trap sighupHandle SIGHUP
 
+#some aliases
 alias ls='ls --color=auto'
 alias la='ls -a'
 alias l='ls -la'
@@ -136,10 +142,10 @@ alias please='sudo'
 alias pls='sudo'
 alias nuke='rm -rf'
 alias ip='ip -c'
-#alias cd='cl'				#temprorary i guess
 
+#next line is for closing (I probablly won't use it)
 #\[\n──────┴───────┘\033[1F\]
 
-#nuh uh
+#TODO: add git status and program exit codes
 PS1='\A │ \[$GREEN\]\u\[$RES\] │ \w \$> '
 PS2='> '
