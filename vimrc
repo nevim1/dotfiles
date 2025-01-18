@@ -25,6 +25,7 @@ set clipboard=unnamedplus
 set splitright
 set splitbelow
 
+
 let g:OmniSharp_server_use_net6=1
 
 call plug#begin('~/.vim/plugged')
@@ -33,6 +34,7 @@ call plug#begin('~/.vim/plugged')
 	Plug 'jaredgorski/SpaceCamp'
 	Plug 'Valloric/YouCompleteMe'
 	Plug 'OmniSharp/omnisharp-vim'
+	Plug 'simeji/winresizer'
 
 call plug#end()
 
@@ -47,3 +49,8 @@ if (empty($TMUX))
 endif
 
 filetype plugin on
+
+autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python3\"|normal! G
+autocmd VimEnter * vertical terminal
+autocmd VimEnter * wincmd p
+autocmd VimLeavePre * if &buftype == 'terminal' | call nvim_input('<C-d>') | endif

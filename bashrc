@@ -112,6 +112,11 @@ reboot(){
 	sudo reboot
 }
 
+cl(){
+	cd $@
+	ls --color=auto
+}
+
 clear
 
 if $resize_clear; then
@@ -129,6 +134,7 @@ alias please='sudo'
 alias pls='sudo'
 alias nuke='rm -rf'
 alias ip='ip -c'
+#alias cd='cl'				#temprorary i guess
 
 #\[\n──────┴───────┘\033[1F\]
 
