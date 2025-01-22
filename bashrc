@@ -56,44 +56,48 @@ bind -x '"\C-l":clear'
 
 #make method for NOT making zombies
 cleanup(){
-	echo Hold on
-	echo trying to kill ssh and ram
-	if ! [ -z $SSH_AGENT_PID ];then
-		kill $SSH_AGENT_PID
-		unset SSH_AGENT_PID
+  if [[ ! -z "$KILL_VIM_SSH" || ( -z "$VIM" && ! -z "$SSH_AGENT_PID" ) ]];then
+		kill $SSH_AGENT_PID || echo no killing happend
+	  unset SSH_AGENT_PID
 		echo ssh agent killed
+  else
+    echo ssh wasnt started in vim or isnt running altogether
 	fi
 
-	if ! [ -z $RAM_WATCH_PID ]; then
+	if [ ! -z $RAM_WATCH_PID ]; then
 		kill $RAM_WATCH_PID
-		unset RAM_WATCH_PID
 		echo ram watch killed
 	fi
-	sleep 5 
-	echo terminal ended succesfully
+	unset RAM_WATCH_PID
+
+	sleep 1
 }
 
 #handle when the window of this shell is closed
 sighupHandle(){
-	cleanup
+	#cleanup
 	exit
 }
 
-#when I am using vit too much
+#when I am using vim too much
 :q(){
-	cleanup
+	#cleanup
 	exit
 }
 
 #starting SSH agent
 startSSH(){
-	if [ -v $SSH_AGENT_PID ]; then
+	if [ -z "$SSH_AGENT_PID" ]; then
 		eval "$(ssh-agent -s)"
 		ssh-add ~/.ssh/nevim-linux-lenovo-ssh-key
+		if [ ! -z "$VIM" ];then 
+		  echo ssh started in vim
+		  KILL_VIM_SSH=True
+    fi
 	fi
 }
 
-#autostart SSH agent when trying to access remote
+#autostart SSH agent when trying to access git remote
 git(){
 	case $@ in
 		push*)
@@ -115,6 +119,7 @@ git(){
 }
 
 #somewhy doesn't work for multiword dir names
+#TODO fix that
 cl(){
 	cd $@
 	ls --color=auto
@@ -126,7 +131,7 @@ if $resize_clear; then
 	trap clear WINCH
 fi
 
-#just because I tried wsl on windows (fuck windows)
+#here just because I tried wsl on windows (fuck windows)
 bind 'set bell-style none'
 
 #make it that i wouldn't have zombies
