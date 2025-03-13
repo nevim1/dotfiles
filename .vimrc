@@ -10,6 +10,8 @@ call plug#begin('~/.vim/plugged')
 	Plug 'Valloric/YouCompleteMe'
 	Plug 'OmniSharp/omnisharp-vim'
 	Plug 'simeji/winresizer'
+	Plug 'habamax/vim-godot'
+	Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 
 call plug#end()
 
