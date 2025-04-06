@@ -8,6 +8,7 @@
 MACHINE=$(hostname)
 
 GREEN="$(tput setaf 2)"
+RED="$(tput setaf 1)"
 RES="$(tput sgr0)"
 
 first=true
@@ -70,18 +71,21 @@ cleanup(){
 	fi
 	unset RAM_WATCH_PID
 
-	sleep 1
+	kill_tmux
+	echo tmux killed
+
+	sleep $1
 }
 
 #handle when the window of this shell is closed
 sighupHandle(){
-	#cleanup
+	cleanup 0
 	exit
 }
 
 #when I am using vim too much
 :q(){
-	#cleanup
+	cleanup 1
 	exit
 }
 
@@ -171,8 +175,7 @@ runTmux() {
 
   fi
 }
-_trap_exit() { $TMUX_BIN kill-session -t "T$BASHPID";}
-trap _trap_exit EXIT
+kill_tmux() { $TMUX_BIN kill-session -t "T$BASHPID";}
 
 
 [ $TERM != "screen" ] && TERM=xterm-256color && runTmux
@@ -200,10 +203,13 @@ alias please='sudo'
 alias pls='sudo'
 alias nuke='rm -rf'
 alias ip='ip -c'
+alias vim='TMUX= vim'		#TODO: move insides of TMUX to different variable
+alias clr='clear'
 
 #next line is for closing (I probablly won't use it)
 #\[\n──────┴───────┘\033[1F\]
 
 #TODO: add git status and program exit codes
+#TODO: add shorhand dir if pwd longer than half of screen
 PS1='\A │ \[$GREEN\]\u\[$RES\] │ \w \$> '
 PS2='> '
