@@ -30,8 +30,9 @@ set cursorline
 set incsearch hlsearch
 set novisualbell noerrorbells
 set list
-set listchars=tab:│_,trail:•,extends:\#,nbsp:.,precedes:\#
+set listchars=trail:�,extends:\#,nbsp:.,precedes:\
 ",tab:|↦,trail:␠,nbsp:
+"tab:|_,
 
 " NON-VISUAL STUFF
 set splitright splitbelow
