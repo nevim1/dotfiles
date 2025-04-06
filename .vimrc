@@ -58,6 +58,7 @@ set undolevels=1000
 set wildignore=*.swp,*.bak,*.pyc,*.class,*.docx,*.jpg,*.png,*.gif,*.pdf,*.exe,*.flv,*.img,*.xlsx
 set ignorecase smartcase
 set showmatch
+set encoding=utf-8
 
 
 
