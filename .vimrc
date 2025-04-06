@@ -74,6 +74,6 @@ endfun
 
 autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python3\"|normal! G
 autocmd VimEnter * call OpenVertTerm()
-autocmd BufReadPost * set noexpandtab|retab!|w
+autocmd BufReadPost * set noexpandtab|retab!|w "TODO: don't do if file is readonly
 "TODO: autoclose all terminal windows after :qa
-"TODO: retab after enter any file enter
+
