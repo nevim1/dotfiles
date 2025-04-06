@@ -1,4 +1,5 @@
 include "%L"
+include "/home/nevim/.XGreek"
 
 <Multi_key> <C> <C> <C> <P> : "☭" U262D
 <Multi_key> <less> <equal> <equal> : "⟸" U27F8

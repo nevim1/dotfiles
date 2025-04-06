@@ -16,9 +16,20 @@ call plug#begin('~/.vim/plugged')
 call plug#end()
 
 " VISUAL STUFF 
+
+"for NOT breaking colors
+if (empty($TMUX))			 "tmux evidently has some issues with my colors (maybe)
+	if (has("termguicolors"))
+		set termguicolors
+	endif
+endif
+
 colorscheme one
 
 set background=dark
+
+"set t_8b=[48;2;%lu;%lu;%lum
+"set t_8f=[38;2;%lu;%lu;%lum
 
 syntax on
 
@@ -47,24 +58,20 @@ set wildignore=*.swp,*.bak,*.pyc,*.class,*.docx,*.jpg,*.png,*.gif,*.pdf,*.exe,*.
 set ignorecase smartcase
 set showmatch
 
-"for NOT breaking colors
-if (empty($TMUX))      "tmux evidently has some issues with my colors (maybe)
-	if (has("termguicolors"))
-		set termguicolors
-	endif
-endif
 
 
 " AUTOCMDs
 fun! OpenVertTerm()
-  if &ft =~ 'gitcommit'
-    setl spell
-  else
-    vertical terminal
-    wincmd p
-  endif
+	if &ft =~ 'gitcommit'
+		setl spell
+	elseif &ft =~ 'python'
+		vertical terminal
+		wincmd p
+	endif
 endfun
 
 autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python3\"|normal! G
 autocmd VimEnter * call OpenVertTerm()
+autocmd BufReadPost * set noexpandtab|retab!|w
 "TODO: autoclose all terminal windows after :qa
+"TODO: retab after enter any file enter
