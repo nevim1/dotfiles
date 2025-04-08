@@ -43,9 +43,8 @@ set cursorline
 set incsearch hlsearch
 set novisualbell noerrorbells
 set list
-set listchars=trail:¢,extends:\#,nbsp:.,precedes:\
-",tab:|‚Ü¶,trail:‚ê†,nbsp:
-"tab:|_,
+set listchars=tab:ø_,trail:ø,extends:\#,nbsp:.,precedes:\#
+",tab:|ø,trail:ø,nbsp:
 
 " NON-VISUAL STUFF
 set splitright splitbelow
@@ -74,6 +73,5 @@ endfun
 
 autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python3\"|normal! G
 autocmd VimEnter * call OpenVertTerm()
-autocmd BufReadPost * set noexpandtab|retab!|w "TODO: don't do if file is readonly
+autocmd BufReadPost * if &readonly | set noexpandtab|retab!|w | endif
 "TODO: autoclose all terminal windows after :qa
-
