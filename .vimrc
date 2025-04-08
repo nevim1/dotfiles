@@ -14,7 +14,8 @@ call plug#begin('~/.vim/plugged')
 	Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 
 call plug#end()
-"
+
+
 " NON-VISUAL STUFF
 set splitright splitbelow
 set clipboard=unnamedplus
@@ -30,10 +31,10 @@ set encoding=utf-8
 scriptencoding utf-8
 
 
-" VISUAL STUFF 
+" VISUAL STUFF
 
-"for NOT breaking colors
-if (empty($TMUX))			 "tmux evidently has some issues with my colors (maybe)
+" for NOT breaking colors
+if (empty($TMUX))			 "tmux evidently has some issues with my colors
 	if (has("termguicolors"))
 		set termguicolors
 	endif
@@ -43,13 +44,9 @@ colorscheme one
 
 set background=dark
 
-"set t_8b=[48;2;%lu;%lu;%lum
-"set t_8f=[38;2;%lu;%lu;%lum
-
 syntax on
 
 set tabstop=2 shiftwidth=2 smarttab
-set noexpandtab
 set nowrap
 set numberwidth=4
 set number relativenumber
@@ -59,13 +56,13 @@ set incsearch hlsearch
 set novisualbell noerrorbells
 set list
 set listchars=tab:│_,trail:•,extends:\#,nbsp:.,precedes:\#
-",tab:|¿,trail:¿,nbsp:
-
-
-
+" set noexpandtab
 
 " AUTOCMDs
-fun! OpenVertTerm()
+"TODO: autoclose all terminal windows after :qa
+
+" this is for setting and making filetype specific things
+fun! SetSpecific()
 	if &ft =~ 'gitcommit'
 		setl spell
 	elseif &ft =~ 'python'
@@ -74,7 +71,19 @@ fun! OpenVertTerm()
 	endif
 endfun
 
-autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python3\"|normal! G
-autocmd VimEnter * call OpenVertTerm()
-autocmd BufReadPost * if &readonly | set noexpandtab|retab!|w | endif
-"TODO: autoclose all terminal windows after :qa
+aug FTSpecific
+	autocmd!
+	autocmd VimEnter * call SetSpecific()
+aug END
+
+aug AutoWriteFile
+	autocmd!
+	autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python3\"|normal! G
+	autocmd BufReadPost * if &readonly | retab! 2 | w | endif
+aug END
+
+" Set linebreak wrap for tex files
+augroup FileTypeWrap
+  autocmd!
+  autocmd FileType plaintex,tex,markdown setlocal wrap linebreak
+augroup END
