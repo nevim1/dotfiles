@@ -14,6 +14,21 @@ call plug#begin('~/.vim/plugged')
 	Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 
 call plug#end()
+"
+" NON-VISUAL STUFF
+set splitright splitbelow
+set clipboard=unnamedplus
+set autoindent copyindent
+set hidden
+set mouse=a
+set history=1000
+set undolevels=1000
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.docx,*.jpg,*.png,*.gif,*.pdf,*.exe,*.flv,*.img,*.xlsx
+set ignorecase smartcase
+set showmatch
+set encoding=utf-8
+scriptencoding utf-8
+
 
 " VISUAL STUFF 
 
@@ -43,21 +58,9 @@ set cursorline
 set incsearch hlsearch
 set novisualbell noerrorbells
 set list
-set listchars=tab:¿_,trail:¿,extends:\#,nbsp:.,precedes:\#
-",tab:|¿,trail:¿,nbsp:
+set listchars=tab:â”‚_,trail:â€¢,extends:\#,nbsp:.,precedes:\#
+",tab:|Â¿,trail:Â¿,nbsp:
 
-" NON-VISUAL STUFF
-set splitright splitbelow
-set clipboard=unnamedplus
-set autoindent copyindent
-set hidden
-set mouse=a
-set history=1000
-set undolevels=1000
-set wildignore=*.swp,*.bak,*.pyc,*.class,*.docx,*.jpg,*.png,*.gif,*.pdf,*.exe,*.flv,*.img,*.xlsx
-set ignorecase smartcase
-set showmatch
-set encoding=utf-8
 
 
 
