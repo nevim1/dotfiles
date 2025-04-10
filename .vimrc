@@ -87,3 +87,5 @@ augroup FileTypeWrap
   autocmd!
   autocmd FileType plaintex,tex,markdown setlocal wrap linebreak
 augroup END
+
+com Undokundo undo

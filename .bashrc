@@ -57,12 +57,12 @@ bind -x '"\C-l":clear'
 
 #make method for NOT making zombies
 cleanup(){
-  if [[ ! -z "$KILL_VIM_SSH" || ( -z "$VIM" && ! -z "$SSH_AGENT_PID" ) ]];then
+	if [[ ! -z "$KILL_VIM_SSH" || ( -z "$VIM" && ! -z "$SSH_AGENT_PID" ) ]];then
 		kill $SSH_AGENT_PID || echo no killing happend
-	  unset SSH_AGENT_PID
+		unset SSH_AGENT_PID
 		echo ssh agent killed
-  else
-    echo ssh wasnt started in vim or isnt running altogether
+	else
+		echo ssh wasnt started in vim or isnt running altogether
 	fi
 
 	if [ ! -z $RAM_WATCH_PID ]; then
@@ -71,8 +71,7 @@ cleanup(){
 	fi
 	unset RAM_WATCH_PID
 
-	kill_tmux
-	echo tmux killed
+	kill_tmux && echo tmux killed
 
 	sleep $1
 }
@@ -95,9 +94,9 @@ startSSH(){
 		eval "$(ssh-agent -s)"
 		ssh-add ~/.ssh/nevim-linux-lenovo-ssh-key
 		if [ ! -z "$VIM" ];then 
-		  echo ssh started in vim
-		  KILL_VIM_SSH=True
-    fi
+			echo ssh started in vim
+			KILL_VIM_SSH=True
+		fi
 	fi
 }
 
@@ -144,42 +143,40 @@ export TMUX_BIN=/usr/bin/tmux
 # running new tmux (or attaching) with session name derived from parent bash pid
 runTmux() {
 
-  SESSION_NAME="T$BASHPID"
-  
-  # try to find session with the correct session id (based on the bashs PID)
-  EXISTING_SESSION=$TMUX_BIN ls 2> /dev/null | grep "$SESSION_NAME" | wc -l 
+	SESSION_NAME="T$BASHPID"
+	
+	# try to find session with the correct session id (based on the bashs PID)
+	EXISTING_SESSION=$TMUX_BIN ls 2> /dev/null | grep "$SESSION_NAME" | wc -l 
 
-  if [ "$EXISTING_SESSION" -gt "0" ]; then
-  
-    # if such session exists, attach to it
-    $TMUX_BIN -2 attach-session -t "$SESSION_NAME"
-  
-  else
-  
-    # if such session does not exist, create it
-    $TMUX_BIN new-session -s "$SESSION_NAME"
-  
-  fi 
+	if [ "$EXISTING_SESSION" -gt "0" ]; then
+	
+		# if such session exists, attach to it
+		$TMUX_BIN -2 attach-session -t "$SESSION_NAME"
+	
+	else
+	
+		# if such session does not exist, create it
+		$TMUX_BIN new-session -s "$SESSION_NAME"
+	
+	fi 
 
-  # hook after exitting the session
-  # when the session exists, find a file in /tmp with the name of the session
-  # and extract a path from it. Then cd to it.
-  FILENAME="/tmp/tmux_restore_path.txt"
-  if [ -f $FILENAME ]; then
+	# hook after exitting the session
+	# when the session exists, find a file in /tmp with the name of the session
+	# and extract a path from it. Then cd to it.
+	FILENAME="/tmp/tmux_restore_path.txt"
+	if [ -f $FILENAME ]; then
 
-    MY_PATH=$(tail -n 1 $FILENAME)
+		MY_PATH=$(tail -n 1 $FILENAME)
 
-    rm /tmp/tmux_restore_path.txt
+		rm /tmp/tmux_restore_path.txt
 
-    cd $MY_PATH
+		cd $MY_PATH
 
-  fi
+	fi
 }
 kill_tmux() { $TMUX_BIN kill-session -t "T$BASHPID";}
 
-
-[ $TERM != "screen" ] && TERM=xterm-256color && runTmux
-
+[[ $TERM != "screen" && -z $VIM && $RUN_TMUX ]] && TERM=xterm-256color && runTmux
 
 clear
 
@@ -191,7 +188,7 @@ fi
 bind 'set bell-style none'
 
 #make it that i wouldn't have zombies
-trap cleanup EXIT
+trap 'cleanup 1' EXIT
 trap sighupHandle SIGHUP
 
 #some aliases
@@ -205,6 +202,7 @@ alias nuke='rm -rf'
 alias ip='ip -c'
 alias vim='TMUX= vim'		#TODO: move insides of TMUX to different variable
 alias clr='clear'
+
 
 #next line is for closing (I probablly won't use it)
 #\[\n──────┴───────┘\033[1F\]
