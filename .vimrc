@@ -12,6 +12,7 @@ call plug#begin('~/.vim/plugged')
 	Plug 'simeji/winresizer'
 	Plug 'habamax/vim-godot'
 	Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+	Plug 'vuciv/golf'
 
 call plug#end()
 
@@ -65,6 +66,7 @@ set listchars=tab:│_,trail:•,extends:\#,nbsp:.,precedes:\#
 fun! SetSpecific()
 	if &ft =~ 'gitcommit'
 		setl spell
+		set insertmode
 	elseif &ft =~ 'python'
 		vertical terminal
 		wincmd p
