@@ -13,6 +13,7 @@ call plug#begin('~/.vim/plugged')
 	Plug 'habamax/vim-godot'
 	Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 	Plug 'vuciv/golf'
+	Plug 'tpope/vim-obsession'
 
 call plug#end()
 
@@ -27,7 +28,7 @@ set history=1000
 set undolevels=1000
 set wildignore=*.swp,*.bak,*.pyc,*.class,*.docx,*.jpg,*.png,*.gif,*.pdf,*.exe,*.flv,*.img,*.xlsx
 set ignorecase smartcase
-set showmatch
+set confirm
 set encoding=utf-8
 scriptencoding utf-8
 
@@ -57,6 +58,7 @@ set incsearch hlsearch
 set novisualbell noerrorbells
 set list
 set listchars=tab:│_,trail:•,extends:\#,nbsp:.,precedes:\#
+set showmatch
 " set noexpandtab
 
 " AUTOCMDs

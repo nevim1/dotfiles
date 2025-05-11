@@ -71,7 +71,8 @@ cleanup(){
 	fi
 	unset RAM_WATCH_PID
 
-	kill_tmux && echo tmux killed
+	# I want to leave older tmux sessions just in case I kill their terminal window
+	#kill_tmux && echo tmux killed
 
 	sleep $1
 }
