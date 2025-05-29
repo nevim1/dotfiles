@@ -1,5 +1,6 @@
 #
 # ~/.bashrc
+# smth for starting WSL in windows Xserver
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}')
 export LIBGL_ALWAYS_INDIRECT=1
 
@@ -73,8 +74,7 @@ cleanup(){
 	fi
 	unset RAM_WATCH_PID
 
-	kill_tmux
-	echo tmux killed
+	kill_tmux && echo tmux killed
 
 	sleep $1
 }
@@ -179,9 +179,7 @@ runTmux() {
 }
 kill_tmux() { $TMUX_BIN kill-session -t "T$BASHPID";}
 
-
-[ $TERM != "screen" ] && TERM=xterm-256color && runTmux
-
+[[ $TERM != "screen" && -z $VIM && $RUN_TMUX ]] && TERM=xterm-256color && runTmux
 
 clear
 
@@ -193,7 +191,7 @@ fi
 bind 'set bell-style none'
 
 #make it that i wouldn't have zombies
-trap cleanup EXIT
+trap 'cleanup 1' EXIT
 trap sighupHandle SIGHUP
 
 # some things for pyenv
