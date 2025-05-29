@@ -13,3 +13,5 @@
 	ch = checkout
 [core]
 	editor = vim
+[merge]
+	tool = vimdiff
