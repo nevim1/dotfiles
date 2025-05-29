@@ -11,6 +11,8 @@
 	st = status
 	co = commit
 	ch = checkout
+	ll = !git -P log --format='tformat:%C(yellow)%h%Creset %an (%cr) %C(yellow)%s%Creset' --first-parent -n 10
+	lg = !git log --graph --decorate --pretty=oneline --abbrev-commit
 [core]
 	editor = vim
 [merge]

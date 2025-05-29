@@ -12,13 +12,31 @@ call plug#begin('~/.vim/plugged')
 	Plug 'simeji/winresizer'
 	Plug 'habamax/vim-godot'
 	Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+	Plug 'vuciv/golf'
+	Plug 'tpope/vim-obsession'
 
 call plug#end()
 
-" VISUAL STUFF 
 
-"for NOT breaking colors
-if (empty($TMUX))			 "tmux evidently has some issues with my colors (maybe)
+" NON-VISUAL STUFF
+set splitright splitbelow
+set clipboard=unnamedplus
+set autoindent copyindent
+set hidden
+set mouse=a
+set history=1000
+set undolevels=1000
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.docx,*.jpg,*.png,*.gif,*.pdf,*.exe,*.flv,*.img,*.xlsx
+set ignorecase smartcase
+set confirm
+set encoding=utf-8
+scriptencoding utf-8
+
+
+" VISUAL STUFF
+
+" for NOT breaking colors
+if (empty($TMUX))			 "tmux evidently has some issues with my colors
 	if (has("termguicolors"))
 		set termguicolors
 	endif
@@ -27,9 +45,6 @@ endif
 colorscheme one
 
 set background=dark
-
-"set t_8b=[48;2;%lu;%lu;%lum
-"set t_8f=[38;2;%lu;%lu;%lum
 
 syntax on
 
@@ -43,37 +58,39 @@ set cursorline
 set incsearch hlsearch
 set novisualbell noerrorbells
 set list
-set listchars=trail:¢,extends:\#,nbsp:.,precedes:\
-",tab:|‚Ü¶,trail:‚ê†,nbsp:
-"tab:|_,
-
-" NON-VISUAL STUFF
-set splitright splitbelow
-set clipboard=unnamedplus
-set autoindent copyindent
-set hidden
-set mouse=a
-set history=1000
-set undolevels=1000
-set wildignore=*.swp,*.bak,*.pyc,*.class,*.docx,*.jpg,*.png,*.gif,*.pdf,*.exe,*.flv,*.img,*.xlsx
-set ignorecase smartcase
+set listchars=tab:ø_,trail:ø,extends:\#,nbsp:.,precedes:\#
 set showmatch
-set encoding=utf-8
-
-
+set noexpandtab
 
 " AUTOCMDs
-fun! OpenVertTerm()
+"TODO: autoclose all terminal windows after :qa not :qa!
+
+" this is for setting and making filetype specific things
+fun! SetSpecific()
 	if &ft =~ 'gitcommit'
 		setl spell
+		set insertmode
 	elseif &ft =~ 'python'
 		vertical terminal
 		wincmd p
 	endif
 endfun
 
-autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python3\"|normal! G
-autocmd VimEnter * call OpenVertTerm()
-autocmd BufReadPost * set noexpandtab|retab!|w "TODO: don't do if file is readonly
-"TODO: autoclose all terminal windows after :qa
+aug FTSpecific
+	autocmd!
+	autocmd VimEnter * call SetSpecific()
+aug END
 
+aug AutoWriteFile
+	autocmd!
+	autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python3\"|normal! G
+	autocmd BufReadPost * if &readonly | setl noexpandtab | retab! 2 | w | endif
+aug END
+
+" Set linebreak wrap for tex files
+augroup FileTypeWrap
+  autocmd!
+  autocmd FileType plaintex,tex,markdown setlocal wrap linebreak
+augroup END
+
+com Undokundo undo
