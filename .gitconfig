@@ -13,4 +13,3 @@
 	ch = checkout
 [core]
 	editor = vim
-	quotepath = off

@@ -1,5 +1,7 @@
 #
 # ~/.bashrc
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}')
+export LIBGL_ALWAYS_INDIRECT=1
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -71,8 +73,8 @@ cleanup(){
 	fi
 	unset RAM_WATCH_PID
 
-	# I want to leave older tmux sessions just in case I kill their terminal window
-	#kill_tmux && echo tmux killed
+	kill_tmux
+	echo tmux killed
 
 	sleep $1
 }
@@ -177,7 +179,9 @@ runTmux() {
 }
 kill_tmux() { $TMUX_BIN kill-session -t "T$BASHPID";}
 
-[[ $TERM != "screen" && -z $VIM && $RUN_TMUX ]] && TERM=xterm-256color && runTmux
+
+[ $TERM != "screen" ] && TERM=xterm-256color && runTmux
+
 
 clear
 
@@ -189,8 +193,13 @@ fi
 bind 'set bell-style none'
 
 #make it that i wouldn't have zombies
-trap 'cleanup 1' EXIT
+trap cleanup EXIT
 trap sighupHandle SIGHUP
+
+# some things for pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - bash)"
 
 #some aliases
 alias ls='ls --color=auto'
@@ -203,7 +212,6 @@ alias nuke='rm -rf'
 alias ip='ip -c'
 alias vim='TMUX= vim'		#TODO: move insides of TMUX to different variable
 alias clr='clear'
-
 
 #next line is for closing (I probablly won't use it)
 #\[\n──────┴───────┘\033[1F\]
