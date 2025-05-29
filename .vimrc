@@ -59,10 +59,10 @@ set novisualbell noerrorbells
 set list
 set listchars=tab:│_,trail:•,extends:\#,nbsp:.,precedes:\#
 set showmatch
-" set noexpandtab
+set noexpandtab
 
 " AUTOCMDs
-"TODO: autoclose all terminal windows after :qa
+"TODO: autoclose all terminal windows after :qa not :qa!
 
 " this is for setting and making filetype specific things
 fun! SetSpecific()
@@ -83,7 +83,7 @@ aug END
 aug AutoWriteFile
 	autocmd!
 	autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python3\"|normal! G
-	autocmd BufReadPost * if &readonly | retab! 2 | w | endif
+	autocmd BufReadPost * if &readonly | setl noexpandtab | retab! 2 | w | endif
 aug END
 
 " Set linebreak wrap for tex files
