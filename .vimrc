@@ -1,4 +1,7 @@
 set nocompatible
+" so it wouldn't fuck up anythig else
+set encoding=utf-8
+set fileencoding=utf-8
 " PLUGINS
 let g:OmniSharp_server_use_net6=1
 
@@ -17,26 +20,10 @@ call plug#begin('~/.vim/plugged')
 
 call plug#end()
 
+" VISUAL STUFF 
 
-" NON-VISUAL STUFF
-set splitright splitbelow
-set clipboard=unnamedplus
-set autoindent copyindent
-set hidden
-set mouse=a
-set history=1000
-set undolevels=1000
-set wildignore=*.swp,*.bak,*.pyc,*.class,*.docx,*.jpg,*.png,*.gif,*.pdf,*.exe,*.flv,*.img,*.xlsx
-set ignorecase smartcase
-set confirm
-set encoding=utf-8
-scriptencoding utf-8
-
-
-" VISUAL STUFF
-
-" for NOT breaking colors
-if (empty($TMUX))			 "tmux evidently has some issues with my colors
+"for NOT breaking colors
+if (empty($TMUX))			 "tmux evidently has some issues with my colors (maybe)
 	if (has("termguicolors"))
 		set termguicolors
 	endif
@@ -58,9 +45,20 @@ set cursorline
 set incsearch hlsearch
 set novisualbell noerrorbells
 set list
-set listchars=tab:�_,trail:�,extends:\#,nbsp:.,precedes:\#
+set listchars=tab:│_,trail:•,extends:\#,nbsp:.,precedes:\#
+",tab:|↦,trail:␠,nbsp:
+
+" NON-VISUAL STUFF
+set splitright splitbelow
+set clipboard=unnamedplus
+set autoindent copyindent
+set hidden
+set mouse=a
+set history=1000
+set undolevels=1000
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.docx,*.jpg,*.png,*.gif,*.pdf,*.exe,*.flv,*.img,*.xlsx
+set ignorecase smartcase
 set showmatch
-set noexpandtab
 
 " AUTOCMDs
 "TODO: autoclose all terminal windows after :qa not :qa!
@@ -93,4 +91,5 @@ augroup FileTypeWrap
   autocmd FileType plaintex,tex,markdown setlocal wrap linebreak
 augroup END
 
+" line from Martin ¿karytka
 com Undokundo undo
