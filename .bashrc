@@ -1,8 +1,8 @@
 #
 # ~/.bashrc
 # smth for starting WSL in windows Xserver
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}')
-export LIBGL_ALWAYS_INDIRECT=1
+#export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}')
+#export LIBGL_ALWAYS_INDIRECT=1
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -33,7 +33,6 @@ else
 fi
 
 tput vpa $RAMPush
-
 #make clearing method
 clear(){
 	command clear
@@ -96,9 +95,10 @@ startSSH(){
 	if [ -z "$SSH_AGENT_PID" ]; then
 		eval "$(ssh-agent -s)"
 		ssh-add ~/.ssh/nevim-linux-lenovo-ssh-key
-		if [ ! -z "$VIM" ];then 
+		if [ ! -z "$VIM" ];then
 			echo ssh started in vim
 			KILL_VIM_SSH=True
+			sleep 0.5
 		fi
 	fi
 }
@@ -108,7 +108,7 @@ git(){
 	case $@ in
 		push*)
 			startSSH
-			command git $@ 
+			command git $@
 			;;
 		pull*)
 			startSSH
@@ -149,19 +149,19 @@ runTmux() {
 	SESSION_NAME="T$BASHPID"
 	
 	# try to find session with the correct session id (based on the bashs PID)
-	EXISTING_SESSION=$TMUX_BIN ls 2> /dev/null | grep "$SESSION_NAME" | wc -l 
+	# bugfix: added parenthesis around thing that gives value
+	EXISTING_SESSION=$($TMUX_BIN ls 2> /dev/null | grep "$SESSION_NAME" | wc -l)
 
-	if [ "$EXISTING_SESSION" -gt "0" ]; then
+	if [[ "$EXISTING_SESSION" -gt "0" ]]; then
 	
 		# if such session exists, attach to it
 		$TMUX_BIN -2 attach-session -t "$SESSION_NAME"
 	
 	else
-	
 		# if such session does not exist, create it
 		$TMUX_BIN new-session -s "$SESSION_NAME"
 	
-	fi 
+	fi
 
 	# hook after exitting the session
 	# when the session exists, find a file in /tmp with the name of the session
@@ -177,10 +177,15 @@ runTmux() {
 
 	fi
 }
+
 kill_tmux() { $TMUX_BIN kill-session -t "T$BASHPID";}
 
-[[ $TERM != "screen" && -z $VIM && $RUN_TMUX ]] && TERM=xterm-256color && runTmux
 
+# if opening new tmux window so it won't try to start new tmux session inside tmux
+# basicly don't nest tmux
+[[ $TERM != "screen" && -z $VIM && $RUN_TMUX && -z $TMUX ]] && TERM=xterm-256color && runTmux
+
+sleep 0.5
 clear
 
 if $resize_clear; then

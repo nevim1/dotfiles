@@ -71,6 +71,8 @@ fun! SetSpecific()
 	elseif &ft =~ 'python'
 		vertical terminal
 		wincmd p
+		set noexpandtab
+		set tabstop=2 shiftwidth=2
 	endif
 endfun
 
@@ -91,5 +93,5 @@ augroup FileTypeWrap
   autocmd FileType plaintex,tex,markdown setlocal wrap linebreak
 augroup END
 
-" line from Martin ¿karytka
+" line from Martin Škarytka
 com Undokundo undo
