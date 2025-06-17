@@ -206,6 +206,7 @@ eval "$(pyenv init - bash)"
 
 # support fo git-prompt
 . ~/git-prompt.sh
+export GIT_PS1_SHOWDIRTYSTATE=1
 
 #some aliases
 alias ls='ls --color=auto'
