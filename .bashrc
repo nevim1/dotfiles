@@ -204,6 +204,9 @@ export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init - bash)"
 
+# support fo git-prompt
+. ~/git-prompt.sh
+
 #some aliases
 alias ls='ls --color=auto'
 alias la='ls -a'
@@ -215,11 +218,14 @@ alias nuke='rm -rf'
 alias ip='ip -c'
 alias vim='TMUX= vim'		#TODO: move insides of TMUX to different variable
 alias clr='clear'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
 
 #next line is for closing (I probablly won't use it)
 #\[\n──────┴───────┘\033[1F\]
 
 #TODO: add git status and program exit codes
 #TODO: add shorhand dir if pwd longer than half of screen
-PS1='\A │ \[$GREEN\]\u\[$RES\] │ \w \$> '
+PS1='\A │ \[$GREEN\]\u\[$RES\] │ \w$(__git_ps1 " │ (%s)") \$> '
 PS2='> '
