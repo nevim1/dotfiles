@@ -69,7 +69,11 @@ fun! SetSpecific()
 		setl spell
 		set insertmode
 	elseif &ft =~ 'python'
-		vertical terminal
+		if winwidth(0) > (winheight(0)*2.5)
+			vertical terminal
+		else
+			terminal
+		endif
 		wincmd p
 		set noexpandtab
 		set tabstop=2 shiftwidth=2
@@ -83,11 +87,12 @@ aug END
 
 aug AutoWriteFile
 	autocmd!
-	autocmd BufNewFile *.py 0put =\"#!/usr/bin/env python3\"|normal! G
-	autocmd BufReadPost * if &readonly | setl noexpandtab | retab! 2 | w | endif
+	autocmd BufReadPost,BufNewFile *.py if !(getline(1) =~ '#!\/usr\/bin\/env python3') | 0put = '#!/usr/bin/env python3' | endif			" if there ins't hashbang at the begining of the code make it there
+	autocmd BufReadPost,BufNewFile *.scad if !(getline(1) =~ '\$fn\s*=\s*\$preview\s*?\s*\d\+\s:\s*\d\+;') | 0put = '$fn = $preview ? 36 : 72;' | endif			" same but with number of fragments
+	autocmd BufReadPost * if !&readonly | setl noexpandtab | retab! 2 | w | endif
 aug END
 
-" Set linebreak wrap for tex files
+" Set linebreak wrap for plaintext files
 augroup FileTypeWrap
   autocmd!
   autocmd FileType plaintex,tex,markdown setlocal wrap linebreak
