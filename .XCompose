@@ -9,3 +9,4 @@ include "/home/nevim/.XGreek"
 <Multi_key> <t> <u> : "👍" U1F44D
 <Multi_key> <less> <minus> <greater> : "↔" U2194
 <Multi_key> <g> <d> : "Δ" U0394
+<Multi_key> <s> <u> <s> : "ඞ" U0D9E

@@ -94,8 +94,8 @@ aug END
 
 " Set linebreak wrap for plaintext files
 augroup FileTypeWrap
-  autocmd!
-  autocmd FileType plaintex,tex,markdown setlocal wrap linebreak
+	autocmd!
+	autocmd FileType plaintex,tex,markdown setlocal wrap linebreak
 augroup END
 
 " line from Martin Škarytka

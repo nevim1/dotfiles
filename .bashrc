@@ -12,13 +12,14 @@ MACHINE=$(hostname)
 
 GREEN="$(tput setaf 2)"
 RED="$(tput setaf 1)"
-RES="$(tput sgr0)"
+BOLD="$(tput bold)"
+NC="$(tput sgr0)"
 
 first=true
 
 resize_clear=false
 
-entry="${GREEN}${MACHINE}${RES} welcomes you ${GREEN}${USER}${RES}!"
+entry="${GREEN}${MACHINE}${NC} welcomes you ${GREEN}${USER}${NC}!"
 entryPatch="${MACHINE} welcomes you ${USER}!"
 
 #read configs
@@ -228,5 +229,5 @@ alias ....='cd ../../..'
 
 #TODO: add git status and program exit codes
 #TODO: add shorhand dir if pwd longer than half of screen
-PS1='\A │ \[$GREEN\]\u\[$RES\] │ \w$(__git_ps1 " │ (%s)") \$> '
+PS1='\A │ \[$GREEN\]\u\[$NC\] │ \w$(__git_ps1 " │ (%s)") $(ECODE=$?; if [ $ECODE != 0 ]; then echo "│ $RED$BOLD[$ECODE]$NC ";fi)\$> '
 PS2='> '
