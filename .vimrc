@@ -17,6 +17,7 @@ call plug#begin('~/.vim/plugged')
 	Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 	Plug 'vuciv/golf'
 	Plug 'tpope/vim-obsession'
+	Plug 'stevearc/vim-arduino'
 
 call plug#end()
 
@@ -100,3 +101,5 @@ augroup END
 
 " line from Martin Škarytka
 com Undokundo undo
+
+source /home/nevim/builds/lsp-examples/vimrc.generated

@@ -1,5 +1,6 @@
 #
 # ~/.bashrc
+#TODO: make separte file for things that differ between machines
 # smth for starting WSL in windows Xserver
 #export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}')
 #export LIBGL_ALWAYS_INDIRECT=1
@@ -34,6 +35,7 @@ else
 fi
 
 tput vpa $RAMPush
+
 #make clearing method
 clear(){
 	command clear
@@ -219,6 +221,7 @@ alias pls='sudo'
 alias nuke='rm -rf'
 alias ip='ip -c'
 alias vim='TMUX= vim'		#TODO: move insides of TMUX to different variable
+alias vimdiff='TMUX= vimdiff'		#TODO: move insides of TMUX to different variable
 alias clr='clear'
 alias ..='cd ..'
 alias ...='cd ../..'
