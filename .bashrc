@@ -23,19 +23,6 @@ resize_clear=false
 entry="${GREEN}${MACHINE}${NC} welcomes you ${GREEN}${USER}${NC}!"
 entryPatch="${MACHINE} welcomes you ${USER}!"
 
-#read configs
-if $(head -n 1 ~/Documents/programs/bash/dotfiles/settings.conf); then
-	bash ~/Documents/programs/bash/dotfiles/RAMWatch.sh &
-
-	RAM_WATCH_PID=$!
-	
-	RAMPush=1
-else
-	RAMPush=0
-fi
-
-tput vpa $RAMPush
-
 #make clearing method
 clear(){
 	command clear
@@ -43,8 +30,6 @@ clear(){
 	date="$(date)"
 
 	width=$(tput cols)
-
-	tput vpa $RAMPush
 
 	if $first;then
 		tput hpa $(((width / 2)-(${#entryPatch} / 2)))

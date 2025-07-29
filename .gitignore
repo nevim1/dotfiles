@@ -1,3 +1,5 @@
 *.conf
 *.bak
 !.tmux*
+.tmux-gitbar*
+RAMWatch.sh
