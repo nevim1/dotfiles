@@ -102,4 +102,7 @@ augroup END
 " line from Martin Škarytka
 com Undokundo undo
 
-source /home/nevim/builds/lsp-examples/vimrc.generated
+let LSPDir='/home/nevim/builds/lsp-examples/vimrc.generated'
+if !empty(glob('/home/nevim/builds/lsp-examples/vimrc.generated'))
+	source /home/nevim/builds/lsp-examples/vimrc.generated
+endif
