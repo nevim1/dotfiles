@@ -1,12 +1,16 @@
-#
 # ~/.bashrc
-#TODO: make separte file for things that differ between machines
-# smth for starting WSL in windows Xserver
-#export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}')
-#export LIBGL_ALWAYS_INDIRECT=1
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
+
+BASH_LOCAL="~/.bashrc.local"
+
+if [ -f $BASH_LOCAL ]; then
+	source ~/.bashrc.local
+	LOAD=true
+else
+	LOAD=false
+fi
 
 #define some constants
 MACHINE=$(hostname)
@@ -82,6 +86,7 @@ sighupHandle(){
 startSSH(){
 	if [ -z "$SSH_AGENT_PID" ]; then
 		eval "$(ssh-agent -s)"
+		#TODO: make that every machine can have its own file name
 		ssh-add ~/.ssh/nevim-linux-lenovo-ssh-key
 		if [ ! -z "$VIM" ];then
 			echo ssh started in vim
@@ -215,7 +220,11 @@ alias ....='cd ../../..'
 #next line is for closing (I probablly won't use it)
 #\[\n──────┴───────┘\033[1F\]
 
-#TODO: add git status and program exit codes
 #TODO: add shorhand dir if pwd longer than half of screen
+#TODO: if there is git status and/or exit code line wrapping will be broken
 PS1='\A │ \[$GREEN\]\u\[$NC\] │ \w$(__git_ps1 " │ (%s)") $(ECODE=$?; if [ $ECODE != 0 ]; then echo "│ $RED$BOLD[$ECODE]$NC ";fi)\$> '
 PS2='> '
+
+if $LOAD; then
+	loadLast
+fi
