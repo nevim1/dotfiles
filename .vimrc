@@ -1,5 +1,5 @@
 set nocompatible
-" so it wouldn't fuck up anythig else
+" so it wouldn't fuck up anything else
 set encoding=utf-8
 set fileencoding=utf-8
 " PLUGINS
@@ -60,6 +60,7 @@ set undolevels=1000
 set wildignore=*.swp,*.bak,*.pyc,*.class,*.docx,*.jpg,*.png,*.gif,*.pdf,*.exe,*.flv,*.img,*.xlsx
 set ignorecase smartcase
 set showmatch
+set foldmethod=marker
 
 " AUTOCMDs
 "TODO: autoclose all terminal windows after :qa not :qa!
@@ -68,7 +69,6 @@ set showmatch
 fun! SetSpecific()
 	if &ft =~ 'gitcommit'
 		setl spell
-		set insertmode
 	elseif &ft =~ 'python'
 		if winwidth(0) > (winheight(0)*2.5)
 			vertical terminal
@@ -76,8 +76,6 @@ fun! SetSpecific()
 			terminal
 		endif
 		wincmd p
-		set noexpandtab
-		set tabstop=2 shiftwidth=2
 	endif
 endfun
 
@@ -90,7 +88,7 @@ aug AutoWriteFile
 	autocmd!
 	autocmd BufReadPost,BufNewFile *.py if !(getline(1) =~ '#!\/usr\/bin\/env python3') | 0put = '#!/usr/bin/env python3' | endif			" if there ins't hashbang at the begining of the code make it there
 	autocmd BufReadPost,BufNewFile *.scad if !(getline(1) =~ '\$fn\s*=\s*\$preview\s*?\s*\d\+\s:\s*\d\+;') | 0put = '$fn = $preview ? 36 : 72;' | endif			" same but with number of fragments
-	autocmd BufReadPost * if !&readonly | setl noexpandtab | retab! 2 | w | endif
+	autocmd BufReadPost * if !(&readonly) | setl noexpandtab | retab! 2 | w | endif
 aug END
 
 " Set linebreak wrap for plaintext files

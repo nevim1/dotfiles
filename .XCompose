@@ -10,3 +10,7 @@ include "%H/.XGreek"
 <Multi_key> <less> <minus> <greater> : "↔" U2194
 <Multi_key> <g> <d> : "Δ" U0394
 <Multi_key> <s> <u> <s> : "ඞ" U0D9E
+<Multi_key> <slash> <backslash> : "✕" U2715
+<Multi_key> <backslash> <slash> : "✕" U2715
+<Multi_key> <bar> <slash> : "✓" U2713
+<Multi_key> <slash> <bar> : "✓" U2713
