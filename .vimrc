@@ -67,6 +67,12 @@ set spelllang=en_us,cs
 " }}}
 
 " {{{ KEYBINDS/REBINDS
+" tab navigation
+nnoremap <Tab> :tabnext<CR>
+nnoremap <S-Tab> :tabprevious<CR>
+nnoremap <C-t> :tabnew<CR>
+execute "set <M-t>=\033t"
+nnoremap <M-t> :tabclose<CR>
 
 " line from Martin Škarytka
 com Undokundo undo
