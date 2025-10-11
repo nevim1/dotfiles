@@ -2,32 +2,32 @@ set nocompatible
 " so it wouldn't fuck up anything else
 set encoding=utf-8
 set fileencoding=utf-8
-" PLUGINS
+
+" {{{ PLUGINS
 let g:OmniSharp_server_use_net6=1
 
 filetype plugin on
 
 call plug#begin('~/.vim/plugged')
 
-	Plug 'rakr/vim-one'
-	Plug 'Valloric/YouCompleteMe'
-	Plug 'OmniSharp/omnisharp-vim'
-	Plug 'simeji/winresizer'
-	Plug 'habamax/vim-godot'
-	Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
-	Plug 'vuciv/golf'
-	Plug 'tpope/vim-obsession'
-	Plug 'stevearc/vim-arduino'
+Plug 'rakr/vim-one'
+Plug 'Valloric/YouCompleteMe'
+Plug 'OmniSharp/omnisharp-vim'
+Plug 'simeji/winresizer'
+Plug 'habamax/vim-godot'
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+Plug 'vuciv/golf'
+Plug 'tpope/vim-obsession'
+Plug 'stevearc/vim-arduino'
 
 call plug#end()
+" }}}
 
-" VISUAL STUFF 
+" {{{VISUAL STUFF
 
 "for NOT breaking colors
-if (empty($TMUX))			 "tmux evidently has some issues with my colors (maybe)
-	if (has("termguicolors"))
-		set termguicolors
-	endif
+if (has("termguicolors"))
+	set termguicolors
 endif
 
 colorscheme one
@@ -47,9 +47,11 @@ set incsearch hlsearch
 set novisualbell noerrorbells
 set list
 set listchars=tab:│_,trail:•,extends:\#,nbsp:.,precedes:\#
+set showbreak=↪\ 
 ",tab:|↦,trail:␠,nbsp:
+" }}}
 
-" NON-VISUAL STUFF
+" {{{ NON-VISUAL STUFF
 set splitright splitbelow
 set clipboard=unnamedplus
 set autoindent copyindent
@@ -61,8 +63,16 @@ set wildignore=*.swp,*.bak,*.pyc,*.class,*.docx,*.jpg,*.png,*.gif,*.pdf,*.exe,*.
 set ignorecase smartcase
 set showmatch
 set foldmethod=marker
+set spelllang=en_us,cs
+" }}}
 
-" AUTOCMDs
+" {{{ KEYBINDS/REBINDS
+
+" line from Martin Škarytka
+com Undokundo undo
+" }}}
+
+" {{{ AUTOCMDs
 "TODO: autoclose all terminal windows after :qa not :qa!
 
 " this is for setting and making filetype specific things
@@ -94,13 +104,13 @@ aug END
 " Set linebreak wrap for plaintext files
 augroup FileTypeWrap
 	autocmd!
-	autocmd FileType plaintex,tex,markdown setlocal wrap linebreak
+	autocmd FileType plaintex,tex,markdown,html setl wrap linebreak spell breakindent
 augroup END
+" }}}
 
-" line from Martin Škarytka
-com Undokundo undo
-
+" {{{ LSP SETUP
 let LSPDir='/home/nevim/builds/lsp-examples/vimrc.generated'
 if !empty(glob('/home/nevim/builds/lsp-examples/vimrc.generated'))
 	source /home/nevim/builds/lsp-examples/vimrc.generated
 endif
+" }}}
