@@ -1,16 +1,11 @@
-# ~/.bashrc
+# # ~/.bashrc
+#TODO: make separte file for things that differ between machines
+# smth for starting WSL in windows Xserver
+#export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}')
+#export LIBGL_ALWAYS_INDIRECT=1
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
-
-BASH_LOCAL="~/.bashrc.local"
-
-if [ -f $BASH_LOCAL ]; then
-	source ~/.bashrc.local
-	LOAD=true
-else
-	LOAD=false
-fi
 
 #define some constants
 MACHINE=$(hostname)
@@ -22,11 +17,10 @@ NC="$(tput sgr0)"
 
 first=true
 
-resize_clear=false
-
 entry="${GREEN}${MACHINE}${NC} welcomes you ${GREEN}${USER}${NC}!"
 entryPatch="${MACHINE} welcomes you ${USER}!"
 
+# {{{ VOLUNTARY CLEAR
 #make clearing method
 clear(){
 	command clear
@@ -39,7 +33,6 @@ clear(){
 		tput hpa $(((width / 2)-(${#entryPatch} / 2)))
 		echo $entry
 		first=false
-		tput vpa $((RAMPush + 1))
 	fi
 
 	tput hpa $(((width / 2)-(${#date} / 2)))
@@ -48,8 +41,11 @@ clear(){
 
 #bind it to <ctrl> + l
 bind -x '"\C-l":clear'
+bind -x '"\e\C-l":clear'
+# }}}
 
-#make method for NOT making zombies
+# {{{ CLEANUP AFTER DEATH
+# make method for NOT making zombies
 cleanup(){
 	if [[ ! -z "$KILL_VIM_SSH" || ( -z "$VIM" && ! -z "$SSH_AGENT_PID" ) ]];then
 		kill $SSH_AGENT_PID || echo no killing happend
@@ -58,12 +54,6 @@ cleanup(){
 	else
 		echo ssh wasnt started in vim or isnt running altogether
 	fi
-
-	if [ ! -z $RAM_WATCH_PID ]; then
-		kill $RAM_WATCH_PID
-		echo ram watch killed
-	fi
-	unset RAM_WATCH_PID
 
 	kill_tmux && echo tmux killed
 
@@ -81,12 +71,13 @@ sighupHandle(){
 	cleanup 1
 	exit
 }
+# }}}
 
+# {{{ git SSH
 #starting SSH agent
 startSSH(){
 	if [ -z "$SSH_AGENT_PID" ]; then
 		eval "$(ssh-agent -s)"
-		#TODO: make that every machine can have its own file name
 		ssh-add ~/.ssh/nevim-linux-lenovo-ssh-key
 		if [ ! -z "$VIM" ];then
 			echo ssh started in vim
@@ -116,11 +107,7 @@ git(){
 			;;
 	esac
 }
-
-#In case of emergency type 'forkbomb'
-forkbomb(){
-	forkbomb | forkbomb &
-}
+# }}}
 
 #somewhy doesn't work for multiword dir names
 #TODO fix that
@@ -129,10 +116,7 @@ cl(){
 	ls --color=auto
 }
 
-
-################
-#TMUX
-################
+# {{{ TMUX
 export RUN_TMUX=true
 export TMUX_BIN=/usr/bin/tmux
 
@@ -177,13 +161,9 @@ kill_tmux() { $TMUX_BIN kill-session -t "T$BASHPID";}
 # if opening new tmux window so it won't try to start new tmux session inside tmux
 # basicly don't nest tmux
 [[ $TERM != "screen" && -z $VIM && $RUN_TMUX && -z $TMUX ]] && TERM=xterm-256color && runTmux
+# }}}
 
-sleep 0.5
 clear
-
-if $resize_clear; then
-	trap clear WINCH
-fi
 
 #here just because I tried wsl on windows (fuck windows)
 bind 'set bell-style none'
@@ -210,8 +190,7 @@ alias please='sudo'
 alias pls='sudo'
 alias nuke='rm -rf'
 alias ip='ip -c'
-alias vim='TMUX= vim'		#TODO: move insides of TMUX to different variable
-alias vimdiff='TMUX= vimdiff'		#TODO: move insides of TMUX to different variable
+alias vim='vim -p'
 alias clr='clear'
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -221,10 +200,5 @@ alias ....='cd ../../..'
 #\[\n──────┴───────┘\033[1F\]
 
 #TODO: add shorhand dir if pwd longer than half of screen
-#TODO: if there is git status and/or exit code line wrapping will be broken
 PS1='\A │ \[$GREEN\]\u\[$NC\] │ \w$(__git_ps1 " │ (%s)") $(ECODE=$?; if [ $ECODE != 0 ]; then echo "│ $RED$BOLD[$ECODE]$NC ";fi)\$> '
 PS2='> '
-
-if $LOAD; then
-	loadLast
-fi
