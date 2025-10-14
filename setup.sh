@@ -5,9 +5,9 @@ for i in $(ls -A); do
 		if [ -f ~/$mi ]; then
 			echo $mi was found in your home dir.
 			if read -p "Replace it? (y/N) " conf && [[ $conf == [yY] || $conf == [yY][eE][sS] ]]; then
-				rm ~/$mi
+				mv ~/$mi "$PWD"/"$mi".old
 				ln -s "$PWD"/$mi ~/$mi
-				echo replaced
+				echo the old version was moved to "$PWD"/"$mi".old
 			fi
 		else
 			ln -s "$PWD"/$mi ~/$mi
