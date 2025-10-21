@@ -1,8 +1,5 @@
 # # ~/.bashrc
 #TODO: make separte file for things that differ between machines
-# smth for starting WSL in windows Xserver
-#export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}')
-#export LIBGL_ALWAYS_INDIRECT=1
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -20,24 +17,31 @@ first=true
 entry="${GREEN}${MACHINE}${NC} welcomes you ${GREEN}${USER}${NC}!"
 entryPatch="${MACHINE} welcomes you ${USER}!"
 
+
+export PATH="$PATH:/home/nevim/.cargo/bin"
+export XDG_DATA_HOME="/home/nevim/.XDG_DATA"
+
+# ranger setup
+
+
 # {{{ VOLUNTARY CLEAR
 #make clearing method
 clear(){
 	command clear
-	
+
 	date="$(date)"
 
 	width=$(tput cols)
 
 	if $first;then
 		tput hpa $(((width / 2)-(${#entryPatch} / 2)))
-		echo $entry
-		first=false
+			echo $entry
+			first=false
 	fi
 
 	tput hpa $(((width / 2)-(${#date} / 2)))
-	echo $date
-}
+		echo $date
+	}
 
 #bind it to <ctrl> + l
 bind -x '"\C-l":clear'
@@ -71,9 +75,14 @@ sighupHandle(){
 	cleanup 1
 	exit
 }
+
+
+#make it that i wouldn't have zombies
+trap 'cleanup 1' EXIT
+trap sighupHandle SIGHUP
 # }}}
 
-# {{{ git SSH
+# {{{ GIT
 #starting SSH agent
 startSSH(){
 	if [ -z "$SSH_AGENT_PID" ]; then
@@ -107,14 +116,11 @@ git(){
 			;;
 	esac
 }
-# }}}
 
-#somewhy doesn't work for multiword dir names
-#TODO fix that
-cl(){
-	cd $@
-	ls --color=auto
-}
+# support fo git-prompt
+. ~/git-prompt.sh
+export GIT_PS1_SHOWDIRTYSTATE=1
+# }}}
 
 # {{{ TMUX
 export RUN_TMUX=true
@@ -124,20 +130,20 @@ export TMUX_BIN=/usr/bin/tmux
 runTmux() {
 
 	SESSION_NAME="T$BASHPID"
-	
+
 	# try to find session with the correct session id (based on the bashs PID)
 	# bugfix: added parenthesis around thing that gives value
 	EXISTING_SESSION=$($TMUX_BIN ls 2> /dev/null | grep "$SESSION_NAME" | wc -l)
 
 	if [[ "$EXISTING_SESSION" -gt "0" ]]; then
-	
-		# if such session exists, attach to it
-		$TMUX_BIN -2 attach-session -t "$SESSION_NAME"
-	
-	else
-		# if such session does not exist, create it
-		$TMUX_BIN new-session -s "$SESSION_NAME"
-	
+
+	# if such session exists, attach to it
+	$TMUX_BIN -2 attach-session -t "$SESSION_NAME"
+
+else
+	# if such session does not exist, create it
+	$TMUX_BIN new-session -s "$SESSION_NAME"
+
 	fi
 
 	# hook after exitting the session
@@ -165,23 +171,36 @@ kill_tmux() { $TMUX_BIN kill-session -t "T$BASHPID";}
 
 clear
 
-#here just because I tried wsl on windows (fuck windows)
-bind 'set bell-style none'
+bind -x '"\C-o": ranger-select files ""'
+bind -x '"\eo": ranger-select dir "/"'
 
-#make it that i wouldn't have zombies
-trap 'cleanup 1' EXIT
-trap sighupHandle SIGHUP
+function ranger-select {
+	local F=$(mktemp)
+	ranger --choose$1=$F
+	if [ -s $F ] ; then
+		local SEL="$(<$F sed '/[^0-9A-Za-z._/-]/{s/^/"/; s/$/"/;}' | tr '\n' ' ')"
+		if [ "${SEL:${#SEL}-1}" != " " ] ; then
+			SEL="$SEL$2 "
+		fi
+		READLINE_LINE="${READLINE_LINE:0:$READLINE_POINT}$SEL${READLINE_LINE:$READLINE_POINT}"
+		READLINE_POINT=$(($READLINE_POINT + ${#SEL}))
+	fi
+	rm -f $F
+}
 
 # some things for pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init - bash)"
 
-# support fo git-prompt
-. ~/git-prompt.sh
-export GIT_PS1_SHOWDIRTYSTATE=1
+# {{{ ALIASES
+#somewhy doesn't work for multiword dir names
+#TODO fix that
+cl(){
+	cd $@
+	ls --color=auto
+}
 
-#some aliases
 alias ls='ls --color=auto'
 alias la='ls -a'
 alias l='ls -la'
@@ -195,6 +214,7 @@ alias clr='clear'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+# }}}
 
 #next line is for closing (I probablly won't use it)
 #\[\n──────┴───────┘\033[1F\]

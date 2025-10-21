@@ -3,6 +3,9 @@ set nocompatible
 set encoding=utf-8
 set fileencoding=utf-8
 
+let g:python_recommended_style=0
+let g:markdown_recommended_style=0
+
 " {{{ PLUGINS
 let g:OmniSharp_server_use_net6=1
 
@@ -19,6 +22,10 @@ Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 Plug 'vuciv/golf'
 Plug 'tpope/vim-obsession'
 Plug 'stevearc/vim-arduino'
+Plug 'sputnick1124/uiua.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 " }}}
