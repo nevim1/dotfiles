@@ -13,24 +13,24 @@ filetype plugin on
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'rakr/vim-one'
-Plug 'Valloric/YouCompleteMe'
-Plug 'OmniSharp/omnisharp-vim'
-Plug 'simeji/winresizer'
-Plug 'habamax/vim-godot'
-Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
-Plug 'vuciv/golf'
-Plug 'tpope/vim-obsession'
-Plug 'stevearc/vim-arduino'
-Plug 'sputnick1124/uiua.vim'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'mattn/vim-lsp-settings'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+	Plug 'rakr/vim-one'
+	Plug 'Valloric/YouCompleteMe'
+	Plug 'OmniSharp/omnisharp-vim'
+	Plug 'simeji/winresizer'
+	Plug 'habamax/vim-godot'
+	Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+	Plug 'vuciv/golf'
+	Plug 'tpope/vim-obsession'
+	Plug 'stevearc/vim-arduino'
+	Plug 'sputnick1124/uiua.vim'
+	Plug 'prabirshrestha/vim-lsp'
+	Plug 'mattn/vim-lsp-settings'
+	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 " }}}
 
-" {{{VISUAL STUFF
+" {{{ VISUAL STUFF
 
 "for NOT breaking colors
 if (has("termguicolors"))
@@ -111,7 +111,8 @@ aug AutoWriteFile
 	autocmd!
 	autocmd BufReadPost,BufNewFile *.py if !(getline(1) =~ '#!\/usr\/bin\/env python3') | 0put = '#!/usr/bin/env python3' | endif			" if there ins't hashbang at the begining of the code make it there
 	autocmd BufReadPost,BufNewFile *.scad if !(getline(1) =~ '\$fn\s*=\s*\$preview\s*?\s*\d\+\s:\s*\d\+;') | 0put = '$fn = $preview ? 36 : 72;' | endif			" same but with number of fragments
-	autocmd BufReadPost * if !(&readonly) | setl noexpandtab | retab! 2 | w | endif
+	autocmd BufReadPost,BufNewFile *.scad if !(getline(2) =~ 'nothing\s*=\s*\d*\.\d\+;') | 1put = 'nothing=0.01;' | endif			" same but for adding miniscule amounts
+	autocmd BufReadPost * if !&readonly | setl noexpandtab | retab! 2 | endif
 aug END
 
 " Set linebreak wrap for plaintext files
