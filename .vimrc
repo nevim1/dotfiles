@@ -25,7 +25,6 @@ call plug#begin('~/.vim/plugged')
 	Plug 'sputnick1124/uiua.vim'
 	Plug 'prabirshrestha/vim-lsp'
 	Plug 'mattn/vim-lsp-settings'
-	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 " }}}

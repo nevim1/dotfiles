@@ -19,9 +19,10 @@ entryPatch="${MACHINE} welcomes you ${USER}!"
 
 
 export PATH="$PATH:/home/nevim/.cargo/bin"
+export PATH="$PATH:/home/nevim/Documents/KSP/ksp-klient"
 export XDG_DATA_HOME="/home/nevim/.XDG_DATA"
+export PYTHONPATH="/usr/lib/python3.13/site-packages/"
 
-# ranger setup
 
 
 # {{{ VOLUNTARY CLEAR
@@ -171,6 +172,7 @@ kill_tmux() { $TMUX_BIN kill-session -t "T$BASHPID";}
 
 clear
 
+# {{{ RANGER SETUP
 bind -x '"\C-o": ranger-select files ""'
 bind -x '"\eo": ranger-select dir "/"'
 
@@ -188,6 +190,8 @@ function ranger-select {
 	rm -f $F
 }
 
+# }}}
+
 # some things for pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
@@ -199,6 +203,14 @@ eval "$(pyenv init - bash)"
 cl(){
 	cd $@
 	ls --color=auto
+}
+
+source(){
+	if [[ $# == 0 ]]; then
+		command source ~/.bashrc
+	else
+		command source "$@"
+	fi
 }
 
 alias ls='ls --color=auto'
