@@ -23,7 +23,7 @@ export PATH="$PATH:/home/nevim/Documents/KSP/ksp-klient"
 export XDG_DATA_HOME="/home/nevim/.XDG_DATA"
 export PYTHONPATH="/usr/lib/python3.13/site-packages/"
 
-
+#export TERM=kitty
 
 # {{{ VOLUNTARY CLEAR
 #make clearing method
@@ -211,6 +211,16 @@ source(){
 	else
 		command source "$@"
 	fi
+}
+
+lynx(){
+	if [[ $1 == '-r' ]]; then
+		shift
+		url=$(echo $* | sed -r -e s/\ /\ /g)
+		command lynx $url
+	fi
+	url=$(echo $* | sed -r -e s/\ /\ /g)
+	command lynx "duckduckgo.com/$url"
 }
 
 alias ls='ls --color=auto'
