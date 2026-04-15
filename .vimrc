@@ -28,6 +28,8 @@ call plug#begin('~/.vim/plugged')
 	Plug 'mattn/vim-lsp-settings'
 	Plug 'turbio/bracey.vim'
 	Plug 'chrisbra/csv.vim'
+	Plug 'ActivityWatch/aw-watcher-vim'
+	Plug 'puremourning/vimspector'
 
 call plug#end()
 " }}}
@@ -36,7 +38,7 @@ call plug#end()
 
 "for NOT breaking colors
 if (has("termguicolors"))
-	set termguicolors
+set termguicolors
 endif
 
 colorscheme one
@@ -56,7 +58,7 @@ set incsearch hlsearch
 set novisualbell noerrorbells
 set list
 set listchars=tab:│_,trail:•,extends:\#,nbsp:.,precedes:\#
-set showbreak=↪\ 
+set showbreak=↪\
 ",tab:|↦,trail:␠,nbsp:
 " }}}
 
@@ -82,6 +84,8 @@ nnoremap <S-Tab> :tabprevious<CR>
 nnoremap <C-t> :tabnew<CR>
 execute "set <M-t>=\033t"
 nnoremap <M-t> :tabclose<CR>
+map <ScrollWheelLeft> <Nop>
+map <ScrollWheelRight> <Nop>
 
 " line from Martin Škarytka
 com Undokundo undo
@@ -111,16 +115,23 @@ aug END
 
 aug AutoWriteFile
 	autocmd!
-	autocmd BufReadPost,BufNewFile *.py if !(getline(1) =~ '#!\/usr\/bin\/env python3') | 0put = '#!/usr/bin/env python3' | endif			" if there ins't hashbang at the begining of the code make it there
-	autocmd BufReadPost,BufNewFile *.scad if !(getline(1) =~ '\$fn\s*=\s*\$preview\s*?\s*\d\+\s:\s*\d\+;') | 0put = '$fn = $preview ? 36 : 72;' | endif			" same but with number of fragments
-	autocmd BufReadPost,BufNewFile *.scad if !(getline(2) =~ 'nothing\s*=\s*\d*\.\d\+;') | 1put = 'nothing=0.01;' | endif			" same but for adding miniscule amounts
-	autocmd BufReadPost * if !&readonly | setl noexpandtab | retab! 2 | endif
+	autocmd BufReadPost,BufNewFile *.py if !(getline(1) =~ '#!\/usr\/bin\/env python3') | 0put = '#!/usr/bin/env python3' | endif     " if there ins't hashbang at the begining of the code make it there
+	autocmd BufReadPost,BufNewFile *.sh if !(getline(1) =~ '#!\/usr\/bin\/env bash') | 0put = '#!/usr/bin/env bash' | endif     " if there ins't hashbang at the begining of the code make it there
+	autocmd BufReadPost,BufNewFile *.scad if !(getline(1) =~ '\$fn\s*=\s*\$preview\s*?\s*\d\+\s:\s*\d\+;') | 0put = '$fn = $preview ? 36 : 72;' | endif     " same but with number of fragments
+	autocmd BufReadPost,BufNewFile *.scad if !(getline(2) =~ 'nothing\s*=\s*\d*\.\d\+;') | 1put = 'nothing=0.01;' | endif     " same but for adding miniscule amounts
+aug END
+
+aug AutoTabbing
+	autocmd!
+	autocmd BufReadPost * if !&readonly | setl expandtab | retab 2 | silent! %s/^\(\(  \)*\)/\=substitute(submatch(1), "  ", "\t", "ge")/ge | exe "norm gg" | setl noexpandtab | endif
+	autocmd BufReadPost * if !&readonly | silent! %s/\s*$// | norm gg | endif
 aug END
 
 " Set linebreak wrap for plaintext files
 augroup FileTypeWrap
 	autocmd!
 	autocmd FileType plaintex,tex,markdown,html setl wrap linebreak spell breakindent
+	autocmd FileType plaintext,markdown setl expandtab | retab 2
 augroup END
 " }}}
 

@@ -7,6 +7,7 @@ include "%H/.XGreek"
 <Multi_key> <less> <minus> <minus> : "⟵" U27F5
 <Multi_key> <greater> <minus> <minus> : "⟶" U27F6
 <Multi_key> <t> <u> : "👍" U1F44D
+<Multi_key> <t> <d> : "👎" U1F44E
 <Multi_key> <f> <u> : "🖕" U1F595
 <Multi_key> <less> <minus> <greater> : "↔" U2194
 <Multi_key> <g> <d> : "Δ" U0394
@@ -15,3 +16,4 @@ include "%H/.XGreek"
 <Multi_key> <backslash> <slash> : "✕" U2715
 <Multi_key> <bar> <slash> : "✓" U2713
 <Multi_key> <slash> <bar> : "✓" U2713
+<Multi_key> <i> <d> <k>: "¯\\_(ツ)_/¯"

@@ -17,13 +17,20 @@ first=true
 entry="${GREEN}${MACHINE}${NC} welcomes you ${GREEN}${USER}${NC}!"
 entryPatch="${MACHINE} welcomes you ${USER}!"
 
-
+# {{{ EXPORTS
 export PATH="$PATH:/home/nevim/.cargo/bin"
 export PATH="$PATH:/home/nevim/Documents/KSP/ksp-klient"
+export PATH="$PATH:/home/nevim/Documents/machineWaking"
+export PATH="$PATH:/home/nevim/.dotnet/tools"
+
 export XDG_DATA_HOME="/home/nevim/.XDG_DATA"
+
 export PYTHONPATH="/usr/lib/python3.13/site-packages/"
 
+export STM32_PRG_PATH=/home/nevim/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin
+
 #export TERM=kitty
+# }}}
 
 # {{{ VOLUNTARY CLEAR
 #make clearing method
@@ -192,10 +199,11 @@ function ranger-select {
 
 # }}}
 
-# some things for pyenv
+# {{{ PYENV
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init - bash)"
+# }}}
 
 # {{{ ALIASES
 #somewhy doesn't work for multiword dir names
@@ -214,13 +222,13 @@ source(){
 }
 
 lynx(){
-	if [[ $1 == '-r' ]]; then
+	if [[ "$1" = "-r" ]]; then
 		shift
+		command lynx $*
+	else
 		url=$(echo $* | sed -r -e s/\ /\ /g)
-		command lynx $url
+		command lynx "duckduckgo.com/$url"
 	fi
-	url=$(echo $* | sed -r -e s/\ /\ /g)
-	command lynx "duckduckgo.com/$url"
 }
 
 alias ls='ls --color=auto'
@@ -231,8 +239,10 @@ alias please='sudo'
 alias pls='sudo'
 alias nuke='rm -rf'
 alias ip='ip -c'
+alias vi='vim -p'
 alias vim='vim -p'
 alias clr='clear'
+alias nano='vim'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
