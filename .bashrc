@@ -43,16 +43,16 @@ clear(){
 
 	if $first;then
 		tput hpa $(((width / 2)-(${#entryPatch} / 2)))
-			echo $entry
-			first=false
+		echo $entry
+		first=false
 	fi
 
 	tput hpa $(((width / 2)-(${#date} / 2)))
-		echo $date
-	}
+	echo $date
+}
 
-#bind it to <ctrl> + l
-bind -x '"\C-l":clear'
+# bind it to <ctrl> + l
+#bind -x '"\C-l":clear'
 bind -x '"\e\C-l":clear'
 # }}}
 
