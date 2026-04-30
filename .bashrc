@@ -29,6 +29,20 @@ export PYTHONPATH="/usr/lib/python3.13/site-packages/"
 
 export STM32_PRG_PATH=/home/nevim/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin
 
+# manpages color support
+# shamelessly 'borrowed' from https://gist.github.com/bahamas10/542875bb47990933638d2b7dfaa501bf
+export MANROFFOPT=-P-c
+export LESS_TERMCAP_mb=$'\e[1;31m'
+export LESS_TERMCAP_md=$'\e[1;31m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[1;30;47m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[4;1;32m'
+export LESS_TERMCAP_mr=$'\e[7m'
+export LESS_TERMCAP_mh=$'\e[2m'
+export PAGER='less'
+
 #export TERM=kitty
 # }}}
 
