@@ -266,5 +266,10 @@ alias ....='cd ../../..'
 #\[\n──────┴───────┘\033[1F\]
 
 #TODO: add shorhand dir if pwd longer than half of screen
-PS1='\A │ \[$GREEN\]\u\[$NC\] │ \w$(__git_ps1 " │ (%s)") $(ECODE=$?; if [ $ECODE != 0 ]; then echo "│ $RED$BOLD[$ECODE]$NC ";fi)\$> '
+PS1='\A │ '
+PS1+='\[$GREEN\]\u\[$NC\] │ '
+PS1+='$(if [[ ${#PWD} > $(( $COLUMNS / 2 )) ]]; then result=${PWD##*/}; reslut=${result:-/}; echo $result; else echo $PWD; fi) '
+PS1+='$(__git_ps1 "│ (%s) ")'
+PS1+='$(ECODE=$?; if [ $ECODE != 0 ]; then echo "│ \[$RED$BOLD\][$ECODE]\[$NC\] ";fi)'
+PS1+='\$> '
 PS2='> '
