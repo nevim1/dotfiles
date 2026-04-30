@@ -4,7 +4,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-#define some constants
+# define constants for coloring
 MACHINE=$(hostname)
 
 GREEN="$(tput setaf 2)"
@@ -12,6 +12,7 @@ RED="$(tput setaf 1)"
 BOLD="$(tput bold)"
 NC="$(tput sgr0)"
 
+# top banner
 first=true
 
 entry="${GREEN}${MACHINE}${NC} welcomes you ${GREEN}${USER}${NC}!"
@@ -43,11 +44,10 @@ export LESS_TERMCAP_mr=$'\e[7m'
 export LESS_TERMCAP_mh=$'\e[2m'
 export PAGER='less'
 
-#export TERM=kitty
 # }}}
 
 # {{{ VOLUNTARY CLEAR
-#make clearing method
+# make clearing method
 clear(){
 	command clear
 
@@ -71,7 +71,7 @@ bind -x '"\e\C-l":clear'
 # }}}
 
 # {{{ CLEANUP AFTER DEATH
-# make method for NOT making zombies
+# make method for NOT making forever-living ssh agents
 cleanup(){
 	if [[ ! -z "$KILL_VIM_SSH" || ( -z "$VIM" && ! -z "$SSH_AGENT_PID" ) ]];then
 		kill $SSH_AGENT_PID || echo no killing happend
@@ -86,26 +86,26 @@ cleanup(){
 	sleep $1
 }
 
-#handle when the window of this shell is closed
+# handle when the window of this shell is closed
 sighupHandle(){
 	cleanup 0
 	exit
 }
 
-#when I am using vim too much
+# I am using vim (too much)
 :q(){
 	cleanup 1
 	exit
 }
 
 
-#make it that i wouldn't have zombies
+# make it that i wouldn't have forever-living ssh agents
 trap 'cleanup 1' EXIT
 trap sighupHandle SIGHUP
 # }}}
 
 # {{{ GIT
-#starting SSH agent
+# starting SSH agent
 startSSH(){
 	if [ -z "$SSH_AGENT_PID" ]; then
 		eval "$(ssh-agent -s)"
@@ -118,7 +118,7 @@ startSSH(){
 	fi
 }
 
-#autostart SSH agent when trying to access git remote
+# autostart SSH agent when trying to access git remote
 git(){
 	case $@ in
 		push*)
@@ -220,8 +220,8 @@ eval "$(pyenv init - bash)"
 # }}}
 
 # {{{ ALIASES
-#somewhy doesn't work for multiword dir names
-#TODO fix that
+# somewhy doesn't work for multiword dir names
+# TODO fix that
 cl(){
 	cd $@
 	ls --color=auto
@@ -257,15 +257,8 @@ alias vi='vim -p'
 alias vim='vim -p'
 alias clr='clear'
 alias nano='vim'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
 # }}}
 
-#next line is for closing (I probablly won't use it)
-#\[\n──────┴───────┘\033[1F\]
-
-#TODO: add shorhand dir if pwd longer than half of screen
 PS1='\A │ '
 PS1+='\[$GREEN\]\u\[$NC\] │ '
 PS1+='$(if [[ ${#PWD} > $(( $COLUMNS / 2 )) ]]; then result=${PWD##*/}; reslut=${result:-/}; echo $result; else echo $PWD; fi) '
