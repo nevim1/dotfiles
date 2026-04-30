@@ -1,4 +1,4 @@
-# # ~/.bashrc
+# ~/.bashrc
 #TODO: make separte file for things that differ between machines
 
 # If not running interactively, don't do anything
