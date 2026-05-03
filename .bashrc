@@ -188,7 +188,7 @@ kill_tmux() { $TMUX_BIN kill-session -t "T$BASHPID";}
 
 # if opening new tmux window so it won't try to start new tmux session inside tmux
 # basicly don't nest tmux
-[[ $TERM != "screen" && -z $VIM && $RUN_TMUX && -z $TMUX ]] && TERM=xterm-256color && runTmux
+[[ $TERM != "screen" && -z $VIM && $RUN_TMUX && -z $TMUX && ! -z "$DISPLAY" ]] && TERM=xterm-256color && runTmux
 # }}}
 
 clear
