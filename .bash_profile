@@ -1,11 +1,7 @@
 # ~/.bash_profile
 
-#&& [ "$XDG_VTNR" -eq 1 ]
-if [ -z "$DISPLAY" ]; then
-#	export GTK_THEME=Adwaita:dark
-#	export GTK2_RC_FILES=/usr/share/themes/Adwaita-dark/gtk-2.0/gtkrc
-#	export QT_STYLE_OVERRIDE=Adwaita-Dark
-#	udiksie -t &
+if [ -z "$DISPLAY" ] &&  [ "$XDG_VTNR" -eq 2 ]; then
+	source .xprofile
 	exec startx /usr/bin/awesome
 fi
 
