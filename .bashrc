@@ -259,10 +259,32 @@ alias clr='clear'
 alias nano='vim'
 # }}}
 
-PS1='\A │ '
+exitCode(){
+	local exit="$?"
+	if [[ $exit != 0 ]]; then
+		#TODO fix wrong text wrapping because of color and bold
+		echo "│ $RED$BOLD[$exit]$NC "
+	fi
+	return "$exit"
+}
+
+shortenPwd(){
+	local exit="$?"
+	long="$1"
+	short="$2"
+	if (( $(( ${#long} + 20 )) < $(( $COLUMNS / 2 )) )) ; then
+		echo "$long"
+	else
+		echo "$short"
+	fi
+	return "$exit"
+}
+
+PS1=''
+PS1+='\A │ '
 PS1+='\[$GREEN\]\u\[$NC\] │ '
-PS1+='$(if [[ ${#PWD} > $(( $COLUMNS / 2 )) ]]; then result=${PWD##*/}; reslut=${result:-/}; echo $result; else echo $PWD; fi) '
+PS1+='$(shortenPwd "\w" "\W") '
 PS1+='$(__git_ps1 "│ (%s) ")'
-PS1+='$(ECODE=$?; if [ $ECODE != 0 ]; then echo "│ \[$RED$BOLD\][$ECODE]\[$NC\] ";fi)'
+PS1+='$(exitCode)'
 PS1+='\$> '
 PS2='> '
