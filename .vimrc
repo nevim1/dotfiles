@@ -119,6 +119,7 @@ aug AutoWriteFile
 	autocmd BufReadPost,BufNewFile *.sh if !(getline(1) =~ '#!\/usr\/bin\/env bash') | 0put = '#!/usr/bin/env bash' | endif     " if there ins't hashbang at the begining of the code make it there
 	autocmd BufReadPost,BufNewFile *.scad if !(getline(1) =~ '\$fn\s*=\s*\$preview\s*?\s*\d\+\s:\s*\d\+;') | 0put = '$fn = $preview ? 36 : 72;' | endif     " same but with number of fragments
 	autocmd BufReadPost,BufNewFile *.scad if !(getline(2) =~ 'nothing\s*=\s*\d*\.\d\+;') | 1put = 'nothing=0.01;' | endif     " same but for adding miniscule amounts
+	autocmd BufReadPost,BufNewFile *.scad if !(getline(3) =~ 'use <.*solidpp\.scad>') | 2put = 'use </home/nevim/Documents/openSCAD/solidpp/solidpp.scad>' | endif     " same but for adding miniscule amounts
 aug END
 
 aug AutoTabbing
