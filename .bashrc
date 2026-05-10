@@ -4,9 +4,10 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# define constants for coloring
+# {{{ CONSTANTS
 MACHINE=$(hostname)
 
+# define constants for coloring
 GREEN="$(tput setaf 2)"
 RED="$(tput setaf 1)"
 BOLD="$(tput bold)"
@@ -17,6 +18,8 @@ first=true
 
 entry="${GREEN}${MACHINE}${NC} welcomes you ${GREEN}${USER}${NC}!"
 entryPatch="${MACHINE} welcomes you ${USER}!"
+
+# }}}
 
 # {{{ EXPORTS
 export PATH="$PATH:/home/nevim/.cargo/bin"
@@ -139,7 +142,7 @@ git(){
 	esac
 }
 
-# support fo git-prompt
+# support for git-prompt
 . ~/git-prompt.sh
 export GIT_PS1_SHOWDIRTYSTATE=1
 # }}}
