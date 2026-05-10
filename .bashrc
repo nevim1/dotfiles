@@ -248,6 +248,16 @@ lynx(){
 	fi
 }
 
+w3m(){
+	if [[ "$1" = "-r" ]]; then
+		shift
+		command w3m $*
+	else
+		url=$(echo $* | sed -r -e s/\ /\ /g)
+		command w3m "duckduckgo.com/$url"
+	fi
+}
+
 alias ls='ls --color=auto'
 alias la='ls -a'
 alias l='ls -la'
