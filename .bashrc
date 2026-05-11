@@ -272,11 +272,13 @@ alias clr='clear'
 alias nano='vim'
 # }}}
 
+# {{{ PROMPT
 exitCode(){
 	local exit="$?"
+	formatBefore=$1
+	formatAfter=$2
 	if [[ $exit != 0 ]]; then
-		#TODO fix wrong text wrapping because of color and bold
-		echo "│ $RED$BOLD[$exit]$NC "
+		echo "│ $formatBefore$exit$formatAfter "
 	fi
 	return "$exit"
 }
@@ -298,6 +300,8 @@ PS1+='\A │ '
 PS1+='\[$GREEN\]\u\[$NC\] │ '
 PS1+='$(shortenPwd "\w" "\W") '
 PS1+='$(__git_ps1 "│ (%s) ")'
-PS1+='$(exitCode)'
+PS1+='$(exitCode \[$RED$BOLD\][ ]\[$NC\])'
+PS1+='│ \j '
 PS1+='\$> '
 PS2='> '
+# }}}
