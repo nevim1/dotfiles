@@ -38,7 +38,7 @@ call plug#end()
 
 "for NOT breaking colors
 if (has("termguicolors"))
-set termguicolors
+	set termguicolors
 endif
 
 colorscheme one
