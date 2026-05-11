@@ -84,7 +84,7 @@ cleanup(){
 		echo ssh wasnt started in vim or isnt running altogether
 	fi
 
-	kill_tmux && echo tmux killed
+	#kill_tmux && echo tmux killed
 
 	sleep $1
 }
@@ -154,7 +154,7 @@ export TMUX_BIN=/usr/bin/tmux
 # running new tmux (or attaching) with session name derived from parent bash pid
 runTmux() {
 
-	SESSION_NAME="T$BASHPID"
+	SESSION_NAME="main"
 
 	# try to find session with the correct session id (based on the bashs PID)
 	# bugfix: added parenthesis around thing that gives value
@@ -186,7 +186,7 @@ else
 	fi
 }
 
-kill_tmux() { $TMUX_BIN kill-session -t "T$BASHPID";}
+kill_tmux() { $TMUX_BIN kill-session -t "main";}
 
 
 # if opening new tmux window so it won't try to start new tmux session inside tmux
