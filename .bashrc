@@ -8,8 +8,9 @@
 MACHINE=$(hostname)
 
 # define constants for coloring
-GREEN="$(tput setaf 2)"
 RED="$(tput setaf 1)"
+GREEN="$(tput setaf 2)"
+BLUE="$(tput setaf 6)"
 BOLD="$(tput bold)"
 NC="$(tput sgr0)"
 
@@ -295,13 +296,24 @@ shortenPwd(){
 	return "$exit"
 }
 
+runningJobs(){
+	local exit="$?"
+	jobsRunning=$1
+	formatBefore=$2
+	formatAfter=$3
+	if [[ $jobsRunning != 0 ]]; then
+		echo "│ $formatBefore$jobsRunning$formatAfter "
+	fi
+	return "$exit"
+}
+
 PS1=''
 PS1+='\A │ '
 PS1+='\[$GREEN\]\u\[$NC\] │ '
 PS1+='$(shortenPwd "\w" "\W")'
 PS1+='$(__git_ps1 "│ (%s) ")'
+PS1+='$(runningJobs \j \[$BLUE\] \[$NC\])'
 PS1+='$(exitCode \[$RED$BOLD\][ ]\[$NC\])'
-PS1+='│ \j '
 PS1+='\$> '
 PS2='> '
 # }}}
