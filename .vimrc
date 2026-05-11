@@ -41,7 +41,11 @@ if (has("termguicolors"))
 	set termguicolors
 endif
 
-colorscheme one
+if has_key(environ(), 'DISPLAY')
+	colorscheme one
+else
+	colorscheme elflord
+endif
 
 set background=dark
 
