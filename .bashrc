@@ -288,9 +288,9 @@ shortenPwd(){
 	long="$1"
 	short="$2"
 	if (( $(( ${#long} + 20 )) < $(( $COLUMNS / 2 )) )) ; then
-		echo "$long"
+		echo "$long "
 	else
-		echo "$short"
+		echo "$short "
 	fi
 	return "$exit"
 }
@@ -298,7 +298,7 @@ shortenPwd(){
 PS1=''
 PS1+='\A │ '
 PS1+='\[$GREEN\]\u\[$NC\] │ '
-PS1+='$(shortenPwd "\w" "\W") '
+PS1+='$(shortenPwd "\w" "\W")'
 PS1+='$(__git_ps1 "│ (%s) ")'
 PS1+='$(exitCode \[$RED$BOLD\][ ]\[$NC\])'
 PS1+='│ \j '
