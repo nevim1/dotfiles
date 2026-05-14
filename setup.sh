@@ -24,3 +24,8 @@ done
 if [[ ! -f ~/.vim/autoload/plug.vim ]]; then
 	curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
+
+# if there is setup script for bins then execute it
+if [[ -x ./bin/setup.sh ]]; then
+	./bin/setup.sh
+fi
