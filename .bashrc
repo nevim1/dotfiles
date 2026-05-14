@@ -258,39 +258,6 @@ w3m(){
 		command w3m "duckduckgo.com/$url"
 	fi
 }
-
-#TODO: move recat to separate script/file
-#TODO:  `-> make separte repo for custom bins/scripts
-#TODO:       `-> make it as submodule in dotfiles
-#TODO:            `-> in setup make it symlink to ~/.local/bin
-recat(){
-	# as in REcursive CAT
-	local depth=$2
-	local depth=$(( $depth+1 ))
-
-	local dir=$1
-	if [ -n "$dir" ]; then
-		local dir+="/"
-	fi
-
-	local indent=$( printf -v dents '%*s' "$depth"; printf '%s' "${dents// /'  '}" )
-
-	for i in $( ls $dir ); do
-		if [ -L $i ]; then
-			echo -n $BLUE
-			echo -n "$indent"
-			stat $i | grep File | tail -c +9
-			echo -n $NC
-		elif [ -d $i ]; then
-			echo "$indent"$RED$i$NC:
-			recat $dir$i $depth
-		else
-			echo $GREEN"$indent"$i$NC:
-			cat $dir$i | sed -e "s/^/$indent| /"
-		fi
-	done
-}
-
 # }}}
 
 # {{{ ALIASES
