@@ -23,12 +23,6 @@ entryPatch="${MACHINE} welcomes you ${USER}!"
 # }}}
 
 # {{{ EXPORTS
-export PATH="$PATH:/home/nevim/.cargo/bin"
-export PATH="$PATH:/home/nevim/Documents/KSP/ksp-klient"
-export PATH="$PATH:/home/nevim/Documents/machineWaking"
-export PATH="$PATH:/home/nevim/.dotnet/tools"
-export PATH="$PATH:/home/nevim/.local/bin"
-
 export XDG_DATA_HOME="/home/nevim/.XDG_DATA"
 
 export PYTHONPATH="/usr/lib/python3.13/site-packages/"

@@ -1,5 +1,13 @@
 # ~/.bash_profile
 
+# {{{ EXPORTS
+export PATH="$PATH:/home/nevim/.cargo/bin"
+export PATH="$PATH:/home/nevim/Documents/KSP/ksp-klient"
+export PATH="$PATH:/home/nevim/Documents/machineWaking"
+export PATH="$PATH:/home/nevim/.dotnet/tools"
+export PATH="$PATH:/home/nevim/.local/bin"
+# }}}
+
 if [ -z "$DISPLAY" ] &&  [ "$XDG_VTNR" -eq 2 ]; then
 	source .xprofile
 	exec startx /usr/bin/awesome
