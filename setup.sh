@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-dir="$(dirname "$0")"
+dir=$(cd "$(dirname "$0")"; pwd)
 
 # go over all files in this repo
 for i in $(ls -A "$dir"); do
 	# skip markdowns, git files and this script
 	mi=$( echo $i | sed -r -e s/[^\(tmux\)]\.conf$// -e s/.*\.md// -e s/^\.git\(i.*$\|$\)// -e s/setup\.sh// -e s/bin// -e s/.gitmodules//)
-	if [[ ! -z $mi ]] then
+	if [[ ! -z $mi ]]; then
 		# check if it already exists in home folder
 		if [ -f ~/$mi ]; then
 			echo $mi was found in your home dir.
