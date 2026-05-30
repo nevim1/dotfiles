@@ -7,7 +7,6 @@ export QT_STYLE_OVERRIDE=Adwaita-Dark
 udiskie &
 
 xscreensaver --no-splash &
-#~/.config/awesome/autolock.sh
 
 xinput set-prop 'DLL07A8:01 044E:120B' 'libinput Natural Scrolling Enabled' 1
 xinput set-prop 'DLL07A8:01 044E:120B' 'libinput Disable While Typing Enabled' 0
