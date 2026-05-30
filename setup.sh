@@ -1,20 +1,21 @@
 #!/usr/bin/env bash
+dir="$(dirname "$0")"
 
 # go over all files in this repo
-for i in $(ls -A); do
+for i in $(ls -A "$dir"); do
 	# skip markdowns, git files and this script
-	mi=$( echo $i | sed -r -e s/[^\(tmux\)]\.conf$// -e s/.*\.md// -e s/^\.git\(i.*$\|$\)// -e s/setup\.sh// )
+	mi=$( echo $i | sed -r -e s/[^\(tmux\)]\.conf$// -e s/.*\.md// -e s/^\.git\(i.*$\|$\)// -e s/setup\.sh// -e s/bin// -e s/.gitmodules//)
 	if [[ ! -z $mi ]] then
 		# check if it already exists in home folder
 		if [ -f ~/$mi ]; then
 			echo $mi was found in your home dir.
 			if read -p "Replace it? (y/N) " conf && [[ "$conf" =~ ^[yY]([eE][sS]?)?$ ]]; then
 				mv ~/$mi ~/"$mi".old
-				ln -s "$(dirname "$0")"/$mi ~/$mi
+				ln -s "$dir"/$mi ~/$mi
 				echo the old version was moved to ~/"$mi".old
 			fi
 		else
-			ln -s "$(dirname "$0")"/$mi ~/$mi
+			ln -s "$dir"/$mi ~/$mi
 		fi
 	fi
 done
@@ -26,6 +27,8 @@ if [[ ! -f ~/.vim/autoload/plug.vim ]]; then
 fi
 
 # if there is setup script for bins then execute it
-if [[ -x ./bin/setup.sh ]]; then
-	./bin/setup.sh
+git submodule init
+git submodule update
+if [[ -x "$dir"/bin/setup.sh ]]; then
+	"$dir"/bin/setup.sh
 fi
