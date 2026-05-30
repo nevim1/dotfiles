@@ -108,7 +108,7 @@ trap sighupHandle SIGHUP
 startSSH(){
 	if [ -z "$SSH_AGENT_PID" ]; then
 		eval "$(ssh-agent -s)"
-		ssh-add ~/.ssh/nevim-linux-lenovo-ssh-key
+		ssh-add ~/.ssh/arteficer-ssh-key
 		if [ ! -z "$VIM" ];then
 			echo ssh started in vim
 			KILL_VIM_SSH=True
@@ -252,6 +252,11 @@ w3m(){
 		url=$(echo $* | sed -r -e s/\ /\ /g)
 		command w3m "duckduckgo.com/$url"
 	fi
+}
+
+ssh(){
+	command ssh "$@"
+	first=true clear
 }
 # }}}
 
