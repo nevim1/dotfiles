@@ -10,11 +10,11 @@ for i in $(ls -A); do
 			echo $mi was found in your home dir.
 			if read -p "Replace it? (y/N) " conf && [[ "$conf" =~ ^[yY]([eE][sS]?)?$ ]]; then
 				mv ~/$mi ~/"$mi".old
-				ln -s "$PWD"/$mi ~/$mi
+				ln -s "$(dirname "$0")"/$mi ~/$mi
 				echo the old version was moved to ~/"$mi".old
 			fi
 		else
-			ln -s "$PWD"/$mi ~/$mi
+			ln -s "$(dirname "$0")"/$mi ~/$mi
 		fi
 	fi
 done
