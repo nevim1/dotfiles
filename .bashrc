@@ -273,6 +273,8 @@ alias vi='vim -p'
 alias vim='vim -p'
 alias clr='clear'
 alias nano='vim'
+alias freakycad='freecad'
+alias nevim='vim'
 # }}}
 
 # {{{ PROMPT
