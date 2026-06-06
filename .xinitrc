@@ -1,5 +1,10 @@
 #!/bin/sh
 
+export GTK_THEME=Adwaita:dark
+export GTK2_RC_FILES=/usr/share/themes/Adwaita-dark/gtk-2.0/gtkrc
+export QT_STYLE_OVERRIDE=Adwaita-Dark
+
+echo setting vars in .xinitrc
 prefix="/usr"
 exec_prefix="${prefix}"
 xrdb="xrdb"
@@ -12,7 +17,7 @@ sysresources="$xinitdir/.Xresources"
 sysmodmap="$xinitdir/.Xmodmap"
 
 # merge in defaults and keymaps
-
+echo merge something
 if [ -f "$sysresources" ]; then if [ -x /usr/bin/cpp ] ; then
 	"$xrdb" -merge "$sysresources"
 else
@@ -24,6 +29,7 @@ if [ -f "$sysmodmap" ]; then
 	"$xmodmap" "$sysmodmap"
 fi
 
+echo something with user resources
 if [ -f "$userresources" ]; then
 	if [ -x /usr/bin/cpp ] ; then
 		"$xrdb" -merge "$userresources"
@@ -37,7 +43,7 @@ if [ -f "$usermodmap" ]; then
 fi
 
 # start some nice programs
-
+echo starting some nice programs apparentely
 if [ -d "$xinitdir"/xinitrc.d ] ; then
 	for f in "$xinitdir/xinitrc.d"/?*.sh ; do
 		[ -x "$f" ] && . "$f"

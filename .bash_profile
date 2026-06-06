@@ -8,8 +8,10 @@ export PATH="$PATH:/home/nevim/.dotnet/tools"
 export PATH="$PATH:/home/nevim/.local/bin"
 # }}}
 
-if [ -z "$DISPLAY" ] &&  [ "$XDG_VTNR" -eq 2 ]; then
-	source .xprofile
+if [ -z "$DISPLAY" ] &&  [ "$XDG_VTNR" -eq 1 ]; then
+	echo sourcing .xprofile
+	source ~/.xprofile
+	sleep 5
 	exec startx /usr/bin/awesome
 fi
 
