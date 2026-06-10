@@ -28,7 +28,6 @@ call plug#begin('~/.vim/plugged')
 	Plug 'mattn/vim-lsp-settings'
 	Plug 'turbio/bracey.vim'
 	Plug 'chrisbra/csv.vim'
-	Plug 'ActivityWatch/aw-watcher-vim'
 	Plug 'puremourning/vimspector'
 
 call plug#end()
