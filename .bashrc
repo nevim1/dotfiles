@@ -103,7 +103,7 @@ trap 'cleanup 1' EXIT
 trap sighupHandle SIGHUP
 # }}}
 
-# {{{ GIT
+# {{{ SSH
 # starting SSH agent
 startSSH(){
 	if [ -z "$SSH_AGENT_PID" ]; then
@@ -117,6 +117,14 @@ startSSH(){
 	fi
 }
 
+ssh(){
+	startSSH
+	command ssh "$@"
+	first=true clear
+}
+# }}}
+
+# {{{ GIT
 # autostart SSH agent when trying to access git remote
 git(){
 	case $@ in
@@ -252,11 +260,6 @@ w3m(){
 		url=$(echo $* | sed -r -e s/\ /\ /g)
 		command w3m "duckduckgo.com/$url"
 	fi
-}
-
-ssh(){
-	command ssh "$@"
-	first=true clear
 }
 # }}}
 
