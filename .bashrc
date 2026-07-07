@@ -20,7 +20,15 @@ first=true
 entry="${GREEN}${MACHINE}${NC} welcomes you ${GREEN}${USER}${NC}!"
 entryPatch="${MACHINE} welcomes you ${USER}!"
 
-source ~/.dot.conf
+firstClear=true
+if [ -f ~/.dot.conf ]; then
+	source ~/.dot.conf
+else
+	echo you do not have set up .dot.conf, pls fix
+	echo if you don\'t know what are the options,
+	echo please refer to README.md in your dotfile folder
+	firstClear=false
+fi
 
 # }}}
 
@@ -151,6 +159,11 @@ ssh(){
 	sleep 2
 	first=true clear
 }
+
+ssh-copy-id(){
+	startSSH
+	command ssh-copy-id "$@"
+}
 # }}}
 
 # {{{ GIT
@@ -227,7 +240,9 @@ kill_tmux() { $TMUX_BIN kill-session -t "main";}
 [[ $TERM != "screen" && -z $VIM && $RUN_TMUX && -z $TMUX && ! -z "$DISPLAY" ]] && TERM=xterm-256color && runTmux
 # }}}
 
-clear
+if $firstClear; then
+	clear
+fi
 
 # {{{ RANGER SETUP
 bind -x '"\C-o": ranger-select files ""'
@@ -289,6 +304,10 @@ w3m(){
 		url=$(echo $* | sed -r -e s/\ /\ /g)
 		command w3m "duckduckgo.com/$url"
 	fi
+}
+
+show(){
+	kitten icat "$@"
 }
 # }}}
 
