@@ -128,7 +128,8 @@ aug END
 aug AutoTabbing
 	autocmd!
 	autocmd BufReadPost * if !&readonly | setl expandtab | retab 2 | silent! %s/^\(\(  \)*\)/\=substitute(submatch(1), "  ", "\t", "ge")/ge | exe "norm gg" | setl noexpandtab | endif
-	autocmd BufReadPost * if !&readonly | silent! %s/\s*$// | norm gg | endif
+	autocmd BufReadPost * if !&readonly | silent! %s/\s*$// | exe "norm gg" | endif
+	autocmd BufReadPost *.yaml if !&readonly | setl expandtab | retab 2 | endif
 aug END
 
 " Set linebreak wrap for plaintext files
