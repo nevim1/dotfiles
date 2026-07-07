@@ -1,0 +1,8 @@
+*.md
+.git
+setup.sh
+.lsignore
+.gitmodules
+bin
+*.orig
+userChrome.css

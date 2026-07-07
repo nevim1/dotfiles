@@ -2,20 +2,22 @@
 dir=$(cd "$(dirname "$0")"; pwd)
 
 # go over all files in this repo
-for i in $(ls -A "$dir"); do
-	# skip markdowns, git files and this script
-	mi=$( echo $i | sed -r -e s/[^\(tmux\)]\.conf$// -e s/.*\.md// -e s/^\.git\(i.*$\|$\)// -e s/setup\.sh// -e s/bin// -e s/.gitmodules//)
-	if [[ ! -z $mi ]]; then
+# and skip all files in .lsingore
+for i in $(ls -A "$dir" $(sed 's|^|--ignore=|' .lsignore) ); do
+	if [[ ! -z $i ]]; then
 		# check if it already exists in home folder
-		if [ -f ~/$mi ]; then
-			echo $mi was found in your home dir.
-			if read -p "Replace it? (y/N) " conf && [[ "$conf" =~ ^[yY]([eE][sS]?)?$ ]]; then
-				mv ~/$mi ~/"$mi".old
-				ln -s "$dir"/$mi ~/$mi
-				echo the old version was moved to ~/"$mi".old
+		if [ -f ~/"$i" ]; then
+			#TODO: check if the symlik is pointing to this file
+			if [ ! -L ~/"$i" ]; then
+				echo $i was found in your home dir.
+				if read -p "Replace it? (y/N) " conf && [[ "$conf" =~ ^[yY]([eE][sS]?)?$ ]]; then
+					mv ~/"$i" ~/"$i".old
+					ln -s "$dir"/"$i" ~/"$i"
+					echo the old version was moved to ~/"$i".old
+				fi
 			fi
 		else
-			ln -s "$dir"/$mi ~/$mi
+			ln -s "$dir"/"$i" ~/"$i"
 		fi
 	fi
 done
