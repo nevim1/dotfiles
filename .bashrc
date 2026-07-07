@@ -255,7 +255,9 @@ w3m(){
 }
 
 ssh(){
+	startSSH
 	command ssh "$@"
+	sleep 2
 	first=true clear
 }
 # }}}
@@ -322,3 +324,5 @@ PS1+='$(exitCode \[$RED$BOLD\][ ]\[$NC\])'
 PS1+='\$> '
 PS2='> '
 # }}}
+#
+alias vim='nano'
