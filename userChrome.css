@@ -1,0 +1,60 @@
+#TabsToolbar {
+	visibility: collapse !important;
+}
+
+#sidebar-main {
+	visibility: collapse !important;
+}
+
+#sidebar-button {
+	visibility: collapse !important;
+}
+
+#sidebar-splitter {
+	border: 0px !important;
+	width: 4px !important;
+}
+ #sidebar-box {
+	padding-bottom: 0px !important;
+}
+
+#sidebar {
+	border-top-left-radius: 0px !important;
+	border-bottom-left-radius: 0px !important;
+	border-bottom-right-radius: 0px !important;
+}
+
+#sidebar-panel-header {
+	padding-bottom: 0px !important;
+}
+
+.urlbar-background {
+	border-top-left-radius: 0px !important;
+	border-top-right-radius: 0px !important;
+}
+
+#urlbar-container {
+	padding-top: 0px !important;
+}
+
+.searchmode-switcher {
+	border-top-left-radius: 0px !important;
+	border-top-right-radius: 0px !important;
+}
+.urlbar-input-container {
+	border-top-left-radius: 0px !important;
+	border-top-right-radius: 0px !important;
+	border-top-width: 0px !important;
+	padding-top: 0px !important;
+}
+
+.identity-box-button {
+	border-top-left-radius: 0px !important;
+	border-top-right-radius: 0px !important;
+}
+
+
+#urlbar-container * {
+	border-top-left-radius: 0px !important;
+	border-top-right-radius: 0px !important;
+}
