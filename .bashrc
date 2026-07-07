@@ -20,6 +20,8 @@ first=true
 entry="${GREEN}${MACHINE}${NC} welcomes you ${GREEN}${USER}${NC}!"
 entryPatch="${MACHINE} welcomes you ${USER}!"
 
+source ~/.dot.conf
+
 # }}}
 
 # {{{ EXPORTS
@@ -103,20 +105,55 @@ trap 'cleanup 1' EXIT
 trap sighupHandle SIGHUP
 # }}}
 
-# {{{ GIT
+# {{{ SSH
 # starting SSH agent
 startSSH(){
 	if [ -z "$SSH_AGENT_PID" ]; then
 		eval "$(ssh-agent -s)"
-		ssh-add ~/.ssh/arteficer-ssh-key
-		if [ ! -z "$VIM" ];then
+		if [ -n "$VIM" ];then
 			echo ssh started in vim
-			KILL_VIM_SSH=True
+			KILL_VIM_SSH=true
 			sleep 0.5
 		fi
+	else
+		echo SSH agent is already running
+	fi
+
+	# by this point ssh agent should be already running
+	if [ -z "$sshPrivateKey" ]; then
+		echo sshPrivateKey is not set!
+		return 1
+	fi
+
+	if [[ "$keyAdded" != "true" ]]; then
+		echo adding key at $sshPrivateKey
+		ssh-add $sshPrivateKey
+		keyAdded="true"
+	else
+		echo you\'ve already added your key
 	fi
 }
 
+stopSSH(){
+	if [ -n "$SSH_AGENT_PID" ]; then
+		kill $SSH_AGENT_PID
+		unset SSH_AGENT_PID
+		KILL_VIM_SSH=false
+		keyAdded=false
+	else
+		echo SSH agent isn\'t running
+	fi
+}
+
+ssh(){
+	startSSH
+	command ssh "$@"
+	sleep 2
+	first=true clear
+}
+# }}}
+
+# {{{ GIT
 # autostart SSH agent when trying to access git remote
 git(){
 	case $@ in
@@ -253,13 +290,6 @@ w3m(){
 		command w3m "duckduckgo.com/$url"
 	fi
 }
-
-ssh(){
-	startSSH
-	command ssh "$@"
-	sleep 2
-	first=true clear
-}
 # }}}
 
 # {{{ ALIASES
@@ -324,5 +354,3 @@ PS1+='$(exitCode \[$RED$BOLD\][ ]\[$NC\])'
 PS1+='\$> '
 PS2='> '
 # }}}
-#
-alias vim='nano'
