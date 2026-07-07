@@ -4,6 +4,7 @@ tmux
 pyenv
 ly
 tailscale
+yay:downgrade
 [graphical]
 awesome
 xscreensaver
@@ -14,3 +15,4 @@ adobe-source-code-pro-fonts
 yay:spotify
 discord
 kdeconnect
+steam
