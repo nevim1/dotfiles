@@ -327,6 +327,7 @@ alias nano='vim'
 alias freakycad='freecad'
 alias nevim='vim'
 alias neovim='vim'
+alias mv='mv -i'
 # }}}
 
 # {{{ PROMPT
