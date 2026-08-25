@@ -3,10 +3,14 @@ set nocompatible
 set encoding=utf-8
 set fileencoding=utf-8
 
+" {{{ VARIABLES
 let g:python_recommended_style=0
+let g:zig_recommended_style=0
 let g:markdown_recommended_style=0
 let g:OmniSharp_server_use_net6=1
 let g:livepreview_previewer='evince'
+let g:csv_default_delim=','
+" }}}
 
 " {{{ PLUGINS
 
