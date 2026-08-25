@@ -15,3 +15,4 @@ echo setting layout and mouseout
 xinput set-prop 'DLL07A8:01 044E:120B' 'libinput Natural Scrolling Enabled' 1
 xinput set-prop 'DLL07A8:01 044E:120B' 'libinput Disable While Typing Enabled' 0
 setxkbmap -layout us,cz -variant ,ucw -option grp:caps_switch,compose:rctrl
+xmodmap -e "keysym 0x3c = Escape"
