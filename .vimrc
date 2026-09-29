@@ -34,7 +34,7 @@ call plug#begin('~/.vim/plugged')
 	Plug 'turbio/bracey.vim'
 	Plug 'chrisbra/csv.vim'
 	Plug 'puremourning/vimspector'
-	Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'npm install'}
+	"Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'npm install'}
 
 call plug#end()
 " }}}
