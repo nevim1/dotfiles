@@ -5,6 +5,8 @@ pyenv
 ly
 tailscale
 yay:downgrade
+libqalculate
+
 [graphical]
 awesome
 xscreensaver
