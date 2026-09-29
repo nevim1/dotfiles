@@ -9,6 +9,9 @@
 #sidebar-button {
 	visibility: collapse !important;
 }
+#sidebar-container {
+	visibility: collapse !important;
+}
 
 #sidebar-splitter {
 	border: 0px !important;
@@ -52,7 +55,6 @@
 	border-top-left-radius: 0px !important;
 	border-top-right-radius: 0px !important;
 }
-
 
 #urlbar-container * {
 	border-top-left-radius: 0px !important;
