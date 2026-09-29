@@ -328,6 +328,9 @@ alias freakycad='freecad'
 alias nevim='vim'
 alias neovim='vim'
 alias mv='mv -i'
+alias cal='qalc'
+alias calc='qalc'
+alias ipy='ipython3'
 # }}}
 
 # {{{ PROMPT
