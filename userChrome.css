@@ -10,6 +10,10 @@
 	visibility: collapse !important;
 }
 
+#sidebar-header {
+	visibility: collapse !important;
+}
+
 #sidebar-splitter {
 	border: 0px !important;
 	width: 4px !important;

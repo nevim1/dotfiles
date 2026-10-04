@@ -4,6 +4,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+echo setting constants
 # {{{ CONSTANTS
 MACHINE=$(hostname)
 
@@ -32,6 +33,7 @@ fi
 
 # }}}
 
+echo setting exports
 # {{{ EXPORTS
 export XDG_DATA_HOME="/home/nevim/.XDG_DATA"
 
@@ -55,6 +57,7 @@ export PAGER='less'
 
 # }}}
 
+echo prepare for voluntary clear
 # {{{ VOLUNTARY CLEAR
 # make clearing method
 clear(){
@@ -79,6 +82,7 @@ clear(){
 bind -x '"\e\C-l":clear'
 # }}}
 
+echo prepare for cleanup after death
 # {{{ CLEANUP AFTER DEATH
 # make method for NOT making forever-living ssh agents
 cleanup(){
@@ -113,6 +117,7 @@ trap 'cleanup 1' EXIT
 trap sighupHandle SIGHUP
 # }}}
 
+echo preparing ssh
 # {{{ SSH
 # starting SSH agent
 startSSH(){
@@ -156,7 +161,6 @@ stopSSH(){
 ssh(){
 	startSSH
 	command ssh "$@"
-	sleep 2
 	first=true clear
 }
 
@@ -166,6 +170,7 @@ ssh-copy-id(){
 }
 # }}}
 
+echo preparing git
 # {{{ GIT
 # autostart SSH agent when trying to access git remote
 git(){
@@ -193,9 +198,10 @@ git(){
 export GIT_PS1_SHOWDIRTYSTATE=1
 # }}}
 
+echo preparing tmux
 # {{{ TMUX
 export RUN_TMUX=true
-export TMUX_BIN=/usr/bin/tmux
+export TMUX_BIN=tmux
 
 # running new tmux (or attaching) with session name derived from parent bash pid
 runTmux() {
@@ -240,7 +246,7 @@ kill_tmux() { $TMUX_BIN kill-session -t "main";}
 [[ $TERM != "screen" && -z $VIM && $RUN_TMUX && -z $TMUX && ! -z "$DISPLAY" ]] && TERM=xterm-256color && runTmux
 # }}}
 
-if $firstClear; then
+if [ $firstClear ]; then
 	clear
 fi
 

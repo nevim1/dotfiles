@@ -5,6 +5,11 @@ pyenv
 ly
 tailscale
 yay:downgrade
+tree
+ncdu
+fastfetch
+lm_sensors
+
 [graphical]
 awesome
 xscreensaver
