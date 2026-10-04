@@ -3,10 +3,15 @@ set nocompatible
 set encoding=utf-8
 set fileencoding=utf-8
 
+" {{{ VARIABLES
 let g:python_recommended_style=0
+let g:zig_recommended_style=0
 let g:markdown_recommended_style=0
 let g:OmniSharp_server_use_net6=1
 let g:livepreview_previewer='evince'
+let g:csv_default_delim=','
+let g:instant_markdown_theme = 'dark'
+" }}}
 
 " {{{ PLUGINS
 
@@ -29,6 +34,7 @@ call plug#begin('~/.vim/plugged')
 	Plug 'turbio/bracey.vim'
 	Plug 'chrisbra/csv.vim'
 	Plug 'puremourning/vimspector'
+	"Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'npm install'}
 
 call plug#end()
 " }}}
@@ -78,6 +84,7 @@ set ignorecase smartcase
 set showmatch
 set foldmethod=marker
 set spelllang=en_us,cs
+filetype plugin on
 " }}}
 
 " {{{ KEYBINDS/REBINDS
@@ -141,8 +148,8 @@ augroup END
 " }}}
 
 " {{{ LSP SETUP
-let LSPDir='/home/nevim/builds/lsp-examples/vimrc.generated'
-if !empty(glob('/home/nevim/builds/lsp-examples/vimrc.generated'))
-	source /home/nevim/builds/lsp-examples/vimrc.generated
+let LSPDir='/home/nevim/.vim/plugged/lsp-examples/vimrc.generated'
+if !empty(glob(LSPDir))
+	execute 'source '.fnameescape(LSPDir)
 endif
 " }}}

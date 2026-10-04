@@ -9,6 +9,7 @@ tree
 ncdu
 fastfetch
 lm_sensors
+libqalculate
 
 [graphical]
 awesome
